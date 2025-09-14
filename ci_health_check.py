@@ -17,12 +17,20 @@ def check_application_health():
         print("🚀 Starting application for health check...")
         
         # Check if we're in CI environment
-        if os.getenv('CI'):
+        if os.getenv('CI') or os.getenv('GITHUB_ACTIONS'):
             print("📋 Running in CI environment")
             # In CI, we'll just check if the code can be imported
             try:
                 import src.app
                 print("✅ Application code imports successfully")
+                
+                # Test that all required modules are available
+                import fastapi
+                import uvicorn
+                import pydantic
+                import requests
+                print("✅ All required modules available")
+                
                 return True
             except ImportError as e:
                 print(f"❌ Import error: {e}")
