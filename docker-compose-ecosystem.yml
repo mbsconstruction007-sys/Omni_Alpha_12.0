@@ -1,0 +1,257 @@
+version: '3.8'
+
+services:
+  # Main Ecosystem Controller
+  ecosystem-controller:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile.ecosystem
+    container_name: ecosystem-controller
+    ports:
+      - "8012:8012"
+    environment:
+      - ECOSYSTEM_NAME=OmniAlpha_Global
+      - TARGET_DAILY_VOLUME=1000000000000
+      - MARKET_SHARE_TARGET=0.10
+      - SYSTEMIC_IMPORTANCE=true
+      - TOO_BIG_TO_FAIL=true
+    volumes:
+      - ./data:/app/data
+      - ./logs:/app/logs
+      - ./models:/app/models
+    networks:
+      - ecosystem-network
+    deploy:
+      resources:
+        limits:
+          cpus: '16'
+          memory: 64G
+        reservations:
+          cpus: '8'
+          memory: 32G
+
+  # Infrastructure Services
+  api-marketplace:
+    build: ./services/api-marketplace
+    container_name: api-marketplace
+    ports:
+      - "8013:8013"
+    environment:
+      - API_MARKETPLACE_MODE=production
+      - RATE_LIMIT_ENABLED=true
+    networks:
+      - ecosystem-network
+    depends_on:
+      - ecosystem-controller
+
+  market-maker:
+    build: ./services/market-maker
+    container_name: global-market-maker
+    ports:
+      - "8014:8014"
+    environment:
+      - MARKET_MAKING_MODE=aggressive
+      - RISK_LIMIT_USD=1000000000
+    networks:
+      - ecosystem-network
+    depends_on:
+      - ecosystem-controller
+
+  ai-superintelligence:
+    build: ./services/ai-superintelligence
+    container_name: ai-superintelligence
+    ports:
+      - "8015:8015"
+    environment:
+      - AI_MODE=superintelligence
+      - CONSCIOUSNESS_LEVEL=0.85
+      - SWARM_AGENTS=100000
+    deploy:
+      resources:
+        limits:
+          cpus: '32'
+          memory: 128G
+        reservations:
+          cpus: '16'
+          memory: 64G
+    networks:
+      - ecosystem-network
+    depends_on:
+      - ecosystem-controller
+
+  # Data Infrastructure
+  timescaledb:
+    image: timescale/timescaledb:latest-pg14
+    container_name: ecosystem-timescaledb
+    environment:
+      POSTGRES_DB: ecosystem
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: secure_password
+      TIMESCALEDB_TELEMETRY: off
+    volumes:
+      - timescale_data:/var/lib/postgresql/data
+      - ./init-scripts:/docker-entrypoint-initdb.d
+    ports:
+      - "5432:5432"
+    networks:
+      - ecosystem-network
+    deploy:
+      resources:
+        limits:
+          cpus: '8'
+          memory: 32G
+
+  redis-cluster:
+    image: redis:7-alpine
+    container_name: ecosystem-redis
+    command: redis-server --cluster-enabled yes --appendonly yes --maxmemory 16gb
+    volumes:
+      - redis_data:/data
+    ports:
+      - "6379:6379"
+    networks:
+      - ecosystem-network
+    deploy:
+      resources:
+        limits:
+          cpus: '4'
+          memory: 16G
+
+  # Message Queue
+  kafka:
+    image: confluentinc/cp-kafka:latest
+    container_name: ecosystem-kafka
+    environment:
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://localhost:9092
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+      KAFKA_AUTO_CREATE_TOPICS_ENABLE: true
+    ports:
+      - "9092:9092"
+    depends_on:
+      - zookeeper
+    networks:
+      - ecosystem-network
+
+  zookeeper:
+    image: confluentinc/cp-zookeeper:latest
+    container_name: ecosystem-zookeeper
+    environment:
+      ZOOKEEPER_CLIENT_PORT: 2181
+      ZOOKEEPER_TICK_TIME: 2000
+    ports:
+      - "2181:2181"
+    networks:
+      - ecosystem-network
+
+  # Monitoring Stack
+  prometheus:
+    image: prom/prometheus:latest
+    container_name: ecosystem-prometheus
+    volumes:
+      - ./monitoring/prometheus.yml:/etc/prometheus/prometheus.yml
+      - prometheus_data:/prometheus
+    ports:
+      - "9090:9090"
+    networks:
+      - ecosystem-network
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'
+      - '--storage.tsdb.path=/prometheus'
+      - '--web.console.libraries=/etc/prometheus/console_libraries'
+      - '--web.console.templates=/etc/prometheus/consoles'
+      - '--storage.tsdb.retention.time=200h'
+      - '--web.enable-lifecycle'
+
+  grafana:
+    image: grafana/grafana:latest
+    container_name: ecosystem-grafana
+    ports:
+      - "3000:3000"
+    environment:
+      - GF_SECURITY_ADMIN_PASSWORD=admin
+      - GF_INSTALL_PLUGINS=grafana-clock-panel,grafana-simple-json-datasource
+    volumes:
+      - grafana_data:/var/lib/grafana
+      - ./monitoring/dashboards:/etc/grafana/provisioning/dashboards
+      - ./monitoring/datasources:/etc/grafana/provisioning/datasources
+    networks:
+      - ecosystem-network
+    depends_on:
+      - prometheus
+
+  # Elasticsearch for logging
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:8.8.0
+    container_name: ecosystem-elasticsearch
+    environment:
+      - discovery.type=single-node
+      - xpack.security.enabled=false
+      - "ES_JAVA_OPTS=-Xms2g -Xmx2g"
+    volumes:
+      - elasticsearch_data:/usr/share/elasticsearch/data
+    ports:
+      - "9200:9200"
+    networks:
+      - ecosystem-network
+
+  kibana:
+    image: docker.elastic.co/kibana/kibana:8.8.0
+    container_name: ecosystem-kibana
+    environment:
+      - ELASTICSEARCH_HOSTS=http://elasticsearch:9200
+    ports:
+      - "5601:5601"
+    networks:
+      - ecosystem-network
+    depends_on:
+      - elasticsearch
+
+  # Load Balancer
+  nginx:
+    image: nginx:alpine
+    container_name: ecosystem-nginx
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf
+      - ./nginx/ssl:/etc/nginx/ssl
+    networks:
+      - ecosystem-network
+    depends_on:
+      - ecosystem-controller
+
+  # Backup Service
+  backup:
+    image: postgres:14
+    container_name: ecosystem-backup
+    environment:
+      - PGPASSWORD=secure_password
+    volumes:
+      - ./backups:/backups
+      - ./scripts/backup.sh:/backup.sh
+    networks:
+      - ecosystem-network
+    depends_on:
+      - timescaledb
+    command: /bin/sh -c "while true; do sleep 86400; /backup.sh; done"
+
+networks:
+  ecosystem-network:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.28.0.0/16
+
+volumes:
+  timescale_data:
+    driver: local
+  redis_data:
+    driver: local
+  prometheus_data:
+    driver: local
+  grafana_data:
+    driver: local
+  elasticsearch_data:
+    driver: local

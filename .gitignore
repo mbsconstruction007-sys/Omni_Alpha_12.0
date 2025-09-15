@@ -62,6 +62,21 @@ logs/
 .env.test.local
 .env.production.local
 
+# Secrets and sensitive files
+secrets/
+*.key
+*.pem
+*.p12
+*.pfx
+api_keys.txt
+database_password.txt
+redis_password.txt
+grafana_password.txt
+
+# Configuration files with secrets
+config/secrets/
+config/production/
+
 # Temporary files
 *.tmp
 *.temp

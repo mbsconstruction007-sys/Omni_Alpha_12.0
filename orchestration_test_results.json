@@ -1,0 +1,172 @@
+{
+  "timestamp": "2025-09-16T01:22:58.455465",
+  "total_tests": 18,
+  "passed_tests": 18,
+  "failed_tests": 0,
+  "success_rate": 100.0,
+  "total_duration": 0.025243759155273438,
+  "results": [
+    {
+      "test_name": "Orchestrator Initialization",
+      "passed": true,
+      "duration": 0.0,
+      "error": null,
+      "details": {
+        "result": "Orchestrator initialized with state: active"
+      }
+    },
+    {
+      "test_name": "Component Registration",
+      "passed": true,
+      "duration": 0.0,
+      "error": null,
+      "details": {
+        "result": "Registered 0 components"
+      }
+    },
+    {
+      "test_name": "System State Management",
+      "passed": true,
+      "duration": 0.0,
+      "error": null,
+      "details": {
+        "result": "System state management working. Current state: active"
+      }
+    },
+    {
+      "test_name": "Health Monitoring",
+      "passed": true,
+      "duration": 0.0,
+      "error": null,
+      "details": {
+        "result": "Health monitoring active. Components: 0"
+      }
+    },
+    {
+      "test_name": "Command Processing",
+      "passed": true,
+      "duration": 0.0,
+      "error": null,
+      "details": {
+        "result": "Command processing system working"
+      }
+    },
+    {
+      "test_name": "Event Processing",
+      "passed": true,
+      "duration": 0.0,
+      "error": null,
+      "details": {
+        "result": "Event processing system working"
+      }
+    },
+    {
+      "test_name": "Decision Making",
+      "passed": true,
+      "duration": 0.0,
+      "error": null,
+      "details": {
+        "result": "Decision making system available"
+      }
+    },
+    {
+      "test_name": "Risk Management",
+      "passed": true,
+      "duration": 0.0,
+      "error": null,
+      "details": {
+        "result": "Risk management system available"
+      }
+    },
+    {
+      "test_name": "Performance Optimization",
+      "passed": true,
+      "duration": 0.0,
+      "error": null,
+      "details": {
+        "result": "Performance optimization system available"
+      }
+    },
+    {
+      "test_name": "Evolution Engine",
+      "passed": true,
+      "duration": 0.0,
+      "error": null,
+      "details": {
+        "result": "Evolution engine available"
+      }
+    },
+    {
+      "test_name": "Consciousness Loop",
+      "passed": true,
+      "duration": 0.0,
+      "error": null,
+      "details": {
+        "result": "Consciousness loop available"
+      }
+    },
+    {
+      "test_name": "Integration Manager",
+      "passed": true,
+      "duration": 0.0,
+      "error": null,
+      "details": {
+        "result": "Integration manager working. Services: 0"
+      }
+    },
+    {
+      "test_name": "Service Communication",
+      "passed": true,
+      "duration": 0.0,
+      "error": null,
+      "details": {
+        "result": "Service communication available"
+      }
+    },
+    {
+      "test_name": "Health Checks",
+      "passed": true,
+      "duration": 0.0,
+      "error": null,
+      "details": {
+        "result": "Health checks working. Status: 1 services"
+      }
+    },
+    {
+      "test_name": "Event Broadcasting",
+      "passed": true,
+      "duration": 0.0,
+      "error": null,
+      "details": {
+        "result": "Event broadcasting available"
+      }
+    },
+    {
+      "test_name": "Graceful Shutdown",
+      "passed": true,
+      "duration": 0.0,
+      "error": null,
+      "details": {
+        "result": "Graceful shutdown available"
+      }
+    },
+    {
+      "test_name": "Emergency Procedures",
+      "passed": true,
+      "duration": 0.0,
+      "error": null,
+      "details": {
+        "result": "Emergency procedures available"
+      }
+    },
+    {
+      "test_name": "Load Testing",
+      "passed": true,
+      "duration": 0.025243759155273438,
+      "error": null,
+      "details": {
+        "result": "Load test successful. Operations: 20/20 in 0.03s"
+      }
+    }
+  ]
+}

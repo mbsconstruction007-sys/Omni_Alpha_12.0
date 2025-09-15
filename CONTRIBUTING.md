@@ -1,37 +1,23 @@
-# Contributing to Omni Alpha 5.0
+# Contributing to Omni Alpha 12.0
 
-Thank you for your interest in contributing to Omni Alpha 5.0! This document provides guidelines and information for contributors.
+Thank you for your interest in contributing to Omni Alpha 12.0! This document provides guidelines for contributing to the project.
 
 ## 🚀 Getting Started
 
 ### Prerequisites
-- Python 3.8 or higher
+- Python 3.9+
 - Git
-- Virtual environment (venv or conda)
+- Docker (optional)
+- GitHub account
 
-### Development Setup
-
-1. **Fork and Clone**
-   ```bash
-   git clone https://github.com/mbsconstruction007-sys/omni_alpha_5.0.git
-   cd omni_alpha_5.0
-   ```
-
-2. **Create Virtual Environment**
-   ```bash
-   python -m venv .venv
-   source .venv/bin/activate  # On Windows: .venv\Scripts\activate
-   ```
-
-3. **Install Dependencies**
-   ```bash
-   pip install -r requirements.txt
-   ```
-
-4. **Run the Application**
-   ```bash
-   uvicorn src.app:app --host 127.0.0.1 --port 8000 --reload
-   ```
+### Setup
+1. Fork the repository
+2. Clone your fork: `git clone https://github.com/your-username/Omni_Alpha_12.0.git`
+3. Create a virtual environment: `python -m venv venv`
+4. Activate the environment: `source venv/bin/activate` (Linux/Mac) or `venv\Scripts\activate` (Windows)
+5. Install dependencies: `pip install -r requirements.txt`
+6. Copy environment file: `cp .env.example .env`
+7. Edit `.env` with your configuration
 
 ## 📋 Development Workflow
 
@@ -40,95 +26,94 @@ Thank you for your interest in contributing to Omni Alpha 5.0! This document pro
 - `develop` - Integration branch for features
 - `feature/*` - Feature development branches
 - `hotfix/*` - Critical bug fixes
+- `release/*` - Release preparation branches
 
-### Commit Convention
-We follow conventional commits:
-```
-type(scope): description
+### Creating a Feature
+1. Create a feature branch: `git checkout -b feature/your-feature-name`
+2. Make your changes
+3. Write tests for your changes
+4. Run tests: `pytest tests/`
+5. Run linting: `flake8 backend/` and `black backend/`
+6. Commit your changes: `git commit -m "feat: add your feature"`
+7. Push to your fork: `git push origin feature/your-feature-name`
+8. Create a Pull Request
 
-feat: add new feature
-fix: bug fix
-docs: documentation changes
-style: formatting changes
-refactor: code refactoring
-test: add or update tests
-chore: maintenance tasks
-```
-
-### Pull Request Process
-
-1. **Create Feature Branch**
-   ```bash
-   git checkout -b feature/your-feature-name
-   ```
-
-2. **Make Changes**
-   - Write clean, documented code
-   - Add tests for new functionality
-   - Update documentation as needed
-
-3. **Test Your Changes**
-   ```bash
-   python check_step4_endpoints.py
-   python check_step7_webhook.py
-   python check_step8_advice.py
-   ```
-
-4. **Commit and Push**
-   ```bash
-   git add .
-   git commit -m "feat: add your feature description"
-   git push origin feature/your-feature-name
-   ```
-
-5. **Create Pull Request**
-   - Use the PR template
-   - Provide clear description
-   - Link related issues
+### Commit Message Format
+Use conventional commits format:
+- `feat:` - New feature
+- `fix:` - Bug fix
+- `docs:` - Documentation changes
+- `style:` - Code style changes
+- `refactor:` - Code refactoring
+- `test:` - Adding or updating tests
+- `chore:` - Maintenance tasks
 
 ## 🧪 Testing
 
 ### Running Tests
 ```bash
 # Run all tests
-python check_step4_endpoints.py
-python check_step7_webhook.py
-python check_step8_advice.py
+pytest tests/
+
+# Run specific test file
+pytest tests/test_step1.py
 
 # Run with coverage
-pytest tests/ --cov=src --cov-report=html
+pytest --cov=backend tests/
+
+# Run integration tests
+pytest tests/integration/
 ```
 
-### Test Coverage
-- Maintain test coverage above 80%
-- Write unit tests for new features
-- Include integration tests for API endpoints
+### Writing Tests
+- Write unit tests for all new functionality
+- Use descriptive test names
+- Follow AAA pattern (Arrange, Act, Assert)
+- Mock external dependencies
 
 ## 📝 Code Style
 
-### Python Style Guide
+### Python Style
 - Follow PEP 8
 - Use type hints
 - Write docstrings for functions and classes
 - Keep functions small and focused
 
-### Example Code Style
-```python
-def calculate_progress(completed_steps: int, total_steps: int) -> float:
-    """
-    Calculate the progress percentage of analysis steps.
-    
-    Args:
-        completed_steps: Number of completed steps
-        total_steps: Total number of steps
-        
-    Returns:
-        Progress percentage as float
-    """
-    if total_steps == 0:
-        return 0.0
-    return (completed_steps / total_steps) * 100
+### Linting
+```bash
+# Check code style
+flake8 backend/
+
+# Format code
+black backend/
+
+# Type checking
+mypy backend/
 ```
+
+## 🏗️ Architecture Guidelines
+
+### Project Structure
+```
+backend/
+├── app/
+│   ├── core/           # Core functionality
+│   ├── strategies/     # Trading strategies
+│   ├── execution/      # Order execution
+│   ├── risk/          # Risk management
+│   ├── ai_brain/      # AI components
+│   ├── institutional/ # Institutional features
+│   └── ecosystem/     # Global ecosystem
+├── api/               # API endpoints
+└── main.py           # Application entry point
+```
+
+### Design Principles
+- Single Responsibility Principle
+- Dependency Injection
+- Async/Await for I/O operations
+- Error handling and logging
+- Configuration management
 
 ## 🐛 Bug Reports
 
@@ -137,11 +122,11 @@ When reporting bugs, please include:
 - Steps to reproduce
 - Expected vs actual behavior
 - Environment details (OS, Python version, etc.)
-- Screenshots if applicable
+- Relevant logs or error messages
 
 ## 💡 Feature Requests
 
-For feature requests:
+For feature requests, please:
 - Check existing issues first
 - Provide clear use case
 - Explain the expected behavior
@@ -150,46 +135,70 @@ For feature requests:
 ## 📚 Documentation
 
 ### API Documentation
-- Update API documentation for new endpoints
+- Use FastAPI automatic documentation
+- Add docstrings to all endpoints
 - Include request/response examples
-- Document error codes and messages
+- Document error codes
 
 ### Code Documentation
 - Write clear docstrings
+- Use type hints
 - Add inline comments for complex logic
-- Update README for new features
+- Update README for major changes
 
 ## 🔒 Security
 
-- Never commit sensitive information
+### Security Guidelines
+- Never commit secrets or API keys
 - Use environment variables for configuration
-- Follow security best practices
+- Validate all inputs
+- Follow secure coding practices
 - Report security issues privately
 
-## 📞 Getting Help
+### Reporting Security Issues
+Email security issues to: security@omnialpha.com
 
-- Check existing issues and discussions
-- Join our community discussions
-- Contact maintainers for urgent issues
+## 🚀 Release Process
 
-## 🎯 Project Roadmap
+### Version Numbering
+- Major.Minor.Patch (e.g., 12.0.1)
+- Major: Breaking changes
+- Minor: New features
+- Patch: Bug fixes
 
-### Current Phase (Steps 1-45) ✅
-- Core API implementation
-- Dashboard interface
-- Testing framework
-- Basic deployment
+### Release Checklist
+- [ ] All tests pass
+- [ ] Documentation updated
+- [ ] Version bumped
+- [ ] Changelog updated
+- [ ] Release notes written
+- [ ] Tagged and released
 
-### Next Phase (Steps 46-60) 🔄
-- User authentication
-- Data persistence
-- Advanced analytics
-- Production deployment
+## 🤝 Community Guidelines
+
+### Code of Conduct
+- Be respectful and inclusive
+- Focus on constructive feedback
+- Help others learn and grow
+- Follow the golden rule
+
+### Getting Help
+- Check documentation first
+- Search existing issues
+- Ask questions in discussions
+- Join our community chat
+
+## 📞 Contact
+
+- GitHub: @mbsconstruction007-sys
+- Repository: Omni_Alpha_12.0
+- Issues: Use GitHub Issues
+- Discussions: Use GitHub Discussions
 
 ## 📄 License
 
-By contributing, you agree that your contributions will be licensed under the MIT License.
+By contributing to Omni Alpha 12.0, you agree that your contributions will be licensed under the MIT License.
 
 ---
 
-Thank you for contributing to Omni Alpha 5.0! 🚀
+Thank you for contributing to Omni Alpha 12.0! 🚀
