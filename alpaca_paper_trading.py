@@ -7,10 +7,12 @@ import alpaca_trade_api as tradeapi
 from datetime import datetime
 import time
 
-# REPLACE WITH YOUR PAPER TRADING KEYS
-API_KEY = 'YOUR_ALPACA_API_KEY'
-SECRET_KEY = 'YOUR_ALPACA_SECRET_KEY'
-BASE_URL = 'https://paper-api.alpaca.markets'
+# Import API keys from setup
+try:
+    from alpaca_keys import API_KEY, SECRET_KEY, BASE_URL
+except ImportError:
+    print("❌ API keys not found! Please run: python setup_alpaca_keys.py")
+    exit(1)
 
 def main():
     """Main trading function"""
