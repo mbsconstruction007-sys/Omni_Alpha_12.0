@@ -32,6 +32,9 @@ from core.gemini_ai_agent import integrate_gemini_agent
 # Import Step 14.1 components
 from core.comprehensive_ai_agent import integrate_comprehensive_ai
 
+# Import Step 15 components
+from core.alternative_data_processor import integrate_alternative_data
+
 # ===================== CONFIGURATION =====================
 TELEGRAM_TOKEN = '8271891791:AAGmxaL1XIXjjib1WAsjwIndu-c4iz4SrFk'
 ALPACA_KEY = 'PK6NQI7HSGQ7B38PYLG8'
@@ -632,6 +635,7 @@ Commands:
 /predict SYMBOL TIMEFRAME - AI price prediction
 /optimize SYMBOL SHARES - Execution optimization
 /risks - Hidden risk analysis
+/altdata SYMBOL - Alternative data analysis
 /start_ai - Start automation
 /stop_ai - Stop automation
         """
@@ -922,6 +926,9 @@ def main():
     # Step 14.1: Integrate Comprehensive AI Agent
     validate_cmd, psych_cmd, predict_cmd, optimize_cmd, risk_scan_cmd = integrate_comprehensive_ai(bot)
     
+    # Step 15: Integrate Alternative Data
+    altdata_cmd = integrate_alternative_data(bot)
+    
     # Create Telegram application
     app = Application.builder().token(TELEGRAM_TOKEN).build()
     
@@ -945,17 +952,19 @@ def main():
     app.add_handler(CommandHandler('predict', predict_cmd))
     app.add_handler(CommandHandler('optimize', optimize_cmd))
     app.add_handler(CommandHandler('risks', risk_scan_cmd))
+    app.add_handler(CommandHandler('altdata', altdata_cmd))
     app.add_handler(CommandHandler('start_ai', bot.start_ai))
     app.add_handler(CommandHandler('stop_ai', bot.stop_ai))
     
     # Start bot
     print("=" * 60)
-    print("OMNI ALPHA 12.0+ - COMPLETE SYSTEM WITH STEPS 13, 14 & 14.1")
+    print("OMNI ALPHA 12.0+ - COMPLETE SYSTEM WITH STEPS 13, 14, 14.1 & 15")
     print("=" * 60)
     print("✅ All 12 steps integrated")
     print("✅ Step 13: Market Microstructure & Order Flow")
     print("✅ Step 14: Gemini AI Sentiment & News Analysis")
     print("✅ Step 14.1: Comprehensive AI Agent & Trade Intelligence")
+    print("✅ Step 15: Alternative Data Processing System")
     print("✅ Telegram bot ready")
     print("✅ Alpaca connection ready")
     print("📱 Send /start in Telegram to begin")
