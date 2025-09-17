@@ -41,6 +41,12 @@ from core.options_hedging_system import integrate_options_hedging
 # Import Step 17 components
 from core.portfolio_optimization_orchestration import integrate_portfolio_optimization
 
+# Import Step 18 components
+from core.production_system import integrate_production_system
+
+# Import Step 19 components
+from core.performance_analytics_optimization import integrate_performance_analytics
+
 # ===================== CONFIGURATION =====================
 TELEGRAM_TOKEN = '8271891791:AAGmxaL1XIXjjib1WAsjwIndu-c4iz4SrFk'
 ALPACA_KEY = 'PK6NQI7HSGQ7B38PYLG8'
@@ -653,6 +659,16 @@ Commands:
 /portfolio regime - Market regime analysis
 /portfolio ai - AI portfolio recommendations
 /portfolio health - Portfolio health check
+/production status - Production system status
+/production health - System health check
+/production metrics - System metrics
+/production deploy VERSION - Deploy update
+/production restart - Restart system
+/performance metrics - Performance analytics
+/performance optimize - Run optimization
+/performance scaling - Scaling status
+/performance costs - Cost analysis
+/performance dashboard - Performance dashboard
 /start_ai - Start automation
 /stop_ai - Stop automation
         """
@@ -952,6 +968,12 @@ def main():
     # Step 17: Integrate Portfolio Optimization
     portfolio_cmd = integrate_portfolio_optimization(bot)
     
+    # Step 18: Integrate Production System
+    production_cmd = integrate_production_system(bot)
+    
+    # Step 19: Integrate Performance Analytics
+    performance_cmd = integrate_performance_analytics(bot)
+    
     # Create Telegram application
     app = Application.builder().token(TELEGRAM_TOKEN).build()
     
@@ -978,12 +1000,14 @@ def main():
     app.add_handler(CommandHandler('altdata', altdata_cmd))
     app.add_handler(CommandHandler('options', options_cmd))
     app.add_handler(CommandHandler('portfolio', portfolio_cmd))
+    app.add_handler(CommandHandler('production', production_cmd))
+    app.add_handler(CommandHandler('performance', performance_cmd))
     app.add_handler(CommandHandler('start_ai', bot.start_ai))
     app.add_handler(CommandHandler('stop_ai', bot.stop_ai))
     
     # Start bot
     print("=" * 60)
-    print("OMNI ALPHA 12.0+ - COMPLETE SYSTEM WITH STEPS 13-17")
+    print("OMNI ALPHA 12.0+ - COMPLETE SYSTEM WITH STEPS 13-19")
     print("=" * 70)
     print("✅ All 12 steps integrated")
     print("✅ Step 13: Market Microstructure & Order Flow")
@@ -992,8 +1016,12 @@ def main():
     print("✅ Step 15: Alternative Data Processing System")
     print("✅ Step 16: Complete Options Trading & Intelligent Hedging")
     print("✅ Step 17: Portfolio Optimization & Multi-Strategy Orchestration")
+    print("✅ Step 18: Complete Production Deployment System")
+    print("✅ Step 19: Performance Analytics, Optimization & Scaling")
     print("✅ Telegram bot ready")
     print("✅ Alpaca connection ready")
+    print("🏭 Production-grade infrastructure ready")
+    print("📊 Advanced analytics and auto-optimization ready")
     print("📱 Send /start in Telegram to begin")
     print("=" * 60)
     
