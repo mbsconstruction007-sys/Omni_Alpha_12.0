@@ -1,0 +1,132 @@
+{
+    "microstructure": {
+        "order_book": {
+            "depth_levels": 10,
+            "imbalance_threshold": 0.3,
+            "strong_imbalance_threshold": 0.4,
+            "update_frequency_ms": 100,
+            "classification_method": "lee_ready"
+        },
+        "vpin": {
+            "bucket_size": 50,
+            "lookback_buckets": 50,
+            "toxicity_threshold": 0.7,
+            "high_toxicity_threshold": 0.8,
+            "medium_toxicity_threshold": 0.6,
+            "low_toxicity_threshold": 0.4
+        },
+        "volume_profile": {
+            "period_days": 5,
+            "price_bins": 200,
+            "min_bins": 50,
+            "value_area_percent": 70,
+            "hvn_threshold_multiplier": 1.5,
+            "lvn_threshold_multiplier": 0.5
+        },
+        "order_flow": {
+            "large_order_multiplier": 3,
+            "block_order_percentile": 95,
+            "institutional_threshold": 0.95,
+            "rapid_trade_seconds": 1,
+            "accumulation_correlation_threshold": 0.3,
+            "distribution_correlation_threshold": -0.3,
+            "iceberg_detection_threshold": 10
+        },
+        "spread_analysis": {
+            "excellent_spread_bps": 5,
+            "good_spread_bps": 15,
+            "fair_spread_bps": 30,
+            "poor_spread_bps": 100,
+            "atr_lookback_periods": 60
+        },
+        "signals": {
+            "min_confidence": 60,
+            "min_supporting_signals": 2,
+            "toxicity_override": true,
+            "strong_signal_threshold": 80,
+            "medium_signal_threshold": 60,
+            "weak_signal_threshold": 40,
+            "weights": {
+                "order_book_imbalance": 0.25,
+                "vpin_toxicity": 0.15,
+                "large_orders": 0.20,
+                "volume_profile": 0.15,
+                "order_flow": 0.25
+            }
+        },
+        "risk_management": {
+            "max_toxicity_for_trading": 0.7,
+            "max_spread_bps_for_full_size": 50,
+            "max_spread_bps_for_trading": 200,
+            "min_volume_threshold": 50000,
+            "position_sizing": {
+                "very_small": 0.25,
+                "small": 0.5,
+                "normal": 1.0,
+                "large": 1.5
+            }
+        },
+        "timing": {
+            "immediate_confidence_threshold": 80,
+            "soon_confidence_threshold": 70,
+            "wait_confirmation_threshold": 60,
+            "institutional_alignment_bonus": 10,
+            "flow_momentum_bonus": 5
+        },
+        "stop_loss": {
+            "default_percentage": 2.0,
+            "wide_spread_percentage": 4.0,
+            "medium_spread_percentage": 3.0,
+            "max_stop_distance_pct": 5.0,
+            "use_volume_levels": true
+        },
+        "take_profit": {
+            "default_percentage": 4.0,
+            "strong_signal_percentage": 6.0,
+            "weak_signal_percentage": 2.0,
+            "min_profit_distance_pct": 2.0,
+            "max_profit_distance_pct": 10.0,
+            "use_volume_levels": true
+        },
+        "performance": {
+            "signal_history_limit": 1000,
+            "performance_analysis_hours": 24,
+            "trend_analysis_signals": 10
+        }
+    },
+    "data_sources": {
+        "trade_data": {
+            "max_trades_per_request": 1000,
+            "lookback_minutes_short": 15,
+            "lookback_minutes_medium": 30,
+            "lookback_hours_long": 2
+        },
+        "quote_data": {
+            "update_frequency_ms": 100,
+            "stale_quote_threshold_ms": 5000
+        },
+        "bar_data": {
+            "timeframes": ["1Min", "5Min", "15Min"],
+            "max_bars_per_request": 2000
+        }
+    },
+    "logging": {
+        "level": "INFO",
+        "log_microstructure_signals": true,
+        "log_order_flow": true,
+        "log_institutional_detection": true,
+        "log_performance_metrics": true
+    },
+    "alerts": {
+        "high_toxicity_alert": true,
+        "large_institutional_flow_alert": true,
+        "unusual_order_flow_alert": true,
+        "significant_imbalance_alert": true
+    },
+    "telegram_integration": {
+        "orderflow_command_enabled": true,
+        "microstructure_command_enabled": true,
+        "signal_notifications": true,
+        "performance_reports": true
+    }
+}

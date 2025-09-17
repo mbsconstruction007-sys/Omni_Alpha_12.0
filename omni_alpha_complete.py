@@ -22,6 +22,10 @@ from sklearn.ensemble import RandomForestClassifier
 from sklearn.preprocessing import StandardScaler
 import joblib
 
+# Import Step 13 components
+from core.microstructure import OrderBookAnalyzer, VolumeProfileAnalyzer, OrderFlowTracker
+from core.market_signals import MicrostructureSignals
+
 # ===================== CONFIGURATION =====================
 TELEGRAM_TOKEN = '8271891791:AAGmxaL1XIXjjib1WAsjwIndu-c4iz4SrFk'
 ALPACA_KEY = 'PK6NQI7HSGQ7B38PYLG8'
@@ -447,11 +451,11 @@ class AIOrchestrator:
         # Analytics
         analysis = self.analytics.analyze_symbol(symbol)
         
-        # Combine signals
-        if self.should_buy(strategy_signal, ml_prediction, analysis):
+        # Combine signals (including microstructure)
+        if self.should_buy(strategy_signal, ml_prediction, analysis, symbol):
             await self.execute_buy(symbol)
     
-    def should_buy(self, strategy, ml, analysis):
+    def should_buy(self, strategy, ml, analysis, symbol=None):
         if not strategy or not ml or not analysis:
             return False
             
@@ -465,6 +469,21 @@ class AIOrchestrator:
             
         if analysis['score'] > 70 and analysis['trend'] == 'UPTREND':
             buy_signals += 1
+            
+        # Step 13: Add microstructure signal
+        if symbol and hasattr(self, 'microstructure_signals'):
+            try:
+                microstructure_signal = self.microstructure_signals.generate_comprehensive_signal(symbol)
+                if microstructure_signal:
+                    if 'BUY' in microstructure_signal['signal'] and microstructure_signal['confidence'] > 60:
+                        buy_signals += 1
+                        # Strong microstructure signals get extra weight
+                        if microstructure_signal['confidence'] > 80:
+                            buy_signals += 1
+                    elif microstructure_signal['signal'] == 'AVOID':
+                        return False  # Override - don't trade if microstructure says avoid
+            except Exception as e:
+                logger.error(f"Microstructure signal error: {e}")
             
         return buy_signals >= 2
     
@@ -551,6 +570,16 @@ class OmniAlphaTelegramBot:
             self.execution, self.ml, self.monitoring, self.analytics
         )
         
+        # Step 13: Initialize Microstructure Components
+        self.order_book_analyzer = OrderBookAnalyzer(self.core.api)
+        self.volume_analyzer = VolumeProfileAnalyzer(self.core.api)
+        self.flow_tracker = OrderFlowTracker(self.core.api)
+        self.microstructure_signals = MicrostructureSignals(
+            self.order_book_analyzer,
+            self.volume_analyzer,
+            self.flow_tracker
+        )
+        
     async def start(self, update: Update, context: ContextTypes.DEFAULT_TYPE):
         # Test connection
         status = self.core.test_connection()
@@ -587,6 +616,8 @@ Commands:
 /monitor - Metrics
 /strategy - Active strategy
 /risk - Risk parameters
+/orderflow SYMBOL - Order flow analysis
+/microstructure SYMBOL - Microstructure analysis
 /start_ai - Start automation
 /stop_ai - Stop automation
         """
@@ -764,6 +795,108 @@ System will:
     async def stop_ai(self, update: Update, context: ContextTypes.DEFAULT_TYPE):
         self.ai.trading_active = False
         await update.message.reply_text("🛑 AI Trading Stopped")
+    
+    async def orderflow_command(self, update: Update, context: ContextTypes.DEFAULT_TYPE):
+        """Step 13: Order Flow Analysis Command"""
+        if not context.args:
+            await update.message.reply_text("Usage: /orderflow SYMBOL")
+            return
+        
+        symbol = context.args[0].upper()
+        await update.message.reply_text(f'🔄 Analyzing order flow for {symbol}...')
+        
+        try:
+            # Get all microstructure data
+            imbalance = self.order_book_analyzer.get_order_book_imbalance(symbol)
+            toxicity = self.order_book_analyzer.calculate_vpin_toxicity(symbol)
+            spread = self.order_book_analyzer.analyze_spread_dynamics(symbol)
+            flow = self.flow_tracker.classify_aggressor_side(symbol)
+            signal = self.microstructure_signals.generate_comprehensive_signal(symbol)
+            
+            msg = f"""
+📊 **Order Flow Analysis: {symbol}**
+
+**Order Book Imbalance:**
+• Balance: {imbalance['imbalance']:.3f if imbalance else 'N/A'}
+• Signal: {imbalance['signal'] if imbalance else 'N/A'}
+• Buy Pressure: {imbalance['buy_pressure']:,.0f if imbalance else 'N/A'}
+• Sell Pressure: {imbalance['sell_pressure']:,.0f if imbalance else 'N/A'}
+
+**Market Toxicity (VPIN):**
+• Level: {toxicity['toxicity_level'] if toxicity else 'N/A'}
+• Score: {toxicity['vpin']:.3f if toxicity else 'N/A'}
+• Safe to Trade: {'✅' if toxicity and toxicity['trading_safe'] else '❌' if toxicity else 'N/A'}
+
+**Bid-Ask Spread:**
+• Spread: ${spread['spread']:.4f if spread else 'N/A'}
+• Relative: {spread['relative_spread_bps']:.1f if spread else 'N/A'} bps
+• Liquidity: {spread['liquidity'] if spread else 'N/A'}
+
+**Aggressor Flow:**
+• Dominant Side: {flow['aggressor_side'] if flow else 'N/A'}
+• Confidence: {flow['confidence']:.1f if flow else 'N/A'}%
+• Flow Ratio: {flow['flow_ratio']:.2f if flow else 'N/A'}
+
+**Microstructure Signal:**
+• Action: **{signal['signal'] if signal else 'N/A'}**
+• Confidence: {signal['confidence']:.1f if signal else 'N/A'}%
+• Entry Timing: {signal['entry_timing'] if signal else 'N/A'}
+• Risk Level: {signal['risk_level'] if signal else 'N/A'}
+            """
+            
+            await update.message.reply_text(msg, parse_mode='Markdown')
+            
+        except Exception as e:
+            await update.message.reply_text(f"❌ Error analyzing order flow: {str(e)}")
+    
+    async def microstructure_command(self, update: Update, context: ContextTypes.DEFAULT_TYPE):
+        """Step 13: Microstructure Analysis Command"""
+        if not context.args:
+            await update.message.reply_text("Usage: /microstructure SYMBOL")
+            return
+        
+        symbol = context.args[0].upper()
+        await update.message.reply_text(f'🔬 Performing microstructure analysis for {symbol}...')
+        
+        try:
+            # Volume profile analysis
+            profile = self.volume_analyzer.calculate_volume_profile(symbol)
+            hvn_lvn = self.volume_analyzer.identify_hvn_lvn(symbol)
+            institutional = self.flow_tracker.track_institutional_flow(symbol)
+            large_orders = self.order_book_analyzer.detect_large_orders(symbol)
+            
+            msg = f"""
+🔬 **Microstructure Analysis: {symbol}**
+
+**Volume Profile:**
+• POC (Point of Control): ${profile['poc']:.2f if profile else 'N/A'}
+• Value Area: ${profile['value_area_low']:.2f if profile else 'N/A'} - ${profile['value_area_high']:.2f if profile else 'N/A'}
+• Current Position: {profile['position_in_profile'] if profile else 'N/A'}
+• Bias: {profile['bias'] if profile else 'N/A'}
+
+**Volume Nodes:**
+• High Volume Nodes: {hvn_lvn['hvn_count'] if hvn_lvn else 'N/A'}
+• Low Volume Nodes: {hvn_lvn['lvn_count'] if hvn_lvn else 'N/A'}
+• Nearest HVN: ${hvn_lvn['nearest_hvn']['price']:.2f if hvn_lvn and hvn_lvn['nearest_hvn'] else 'N/A'}
+
+**Large Orders:**
+• Detected: {'✅' if large_orders and large_orders['detected'] else '❌'}
+• Count: {large_orders['large_order_count'] if large_orders else 'N/A'}
+• Direction: {large_orders['direction'] if large_orders and large_orders['detected'] else 'N/A'}
+• Participation: {large_orders['participation_rate']:.1f if large_orders and large_orders['detected'] else 'N/A'}%
+
+**Institutional Activity:**
+• Detected: {'✅' if institutional and institutional['institutional_detected'] else '❌'}
+• Direction: {institutional['institutional_direction'] if institutional else 'N/A'}
+• Participation: {institutional['large_participation_pct']:.1f if institutional else 'N/A'}%
+• Score: {institutional['institutional_score'] if institutional else 'N/A'}/100
+• Recommendation: {institutional['recommendation'] if institutional else 'N/A'}
+            """
+            
+            await update.message.reply_text(msg, parse_mode='Markdown')
+            
+        except Exception as e:
+            await update.message.reply_text(f"❌ Error in microstructure analysis: {str(e)}")
 
 def main():
     # Initialize bot
@@ -782,14 +915,17 @@ def main():
     app.add_handler(CommandHandler('monitor', bot.monitor))
     app.add_handler(CommandHandler('strategy', bot.strategy_info))
     app.add_handler(CommandHandler('risk', bot.risk_info))
+    app.add_handler(CommandHandler('orderflow', bot.orderflow_command))
+    app.add_handler(CommandHandler('microstructure', bot.microstructure_command))
     app.add_handler(CommandHandler('start_ai', bot.start_ai))
     app.add_handler(CommandHandler('stop_ai', bot.stop_ai))
     
     # Start bot
     print("=" * 60)
-    print("OMNI ALPHA 12.0 - COMPLETE SYSTEM")
+    print("OMNI ALPHA 12.0+ - COMPLETE SYSTEM WITH STEP 13")
     print("=" * 60)
     print("✅ All 12 steps integrated")
+    print("✅ Step 13: Market Microstructure & Order Flow")
     print("✅ Telegram bot ready")
     print("✅ Alpaca connection ready")
     print("📱 Send /start in Telegram to begin")
