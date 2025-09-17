@@ -29,6 +29,9 @@ from core.market_signals import MicrostructureSignals
 # Import Step 14 components
 from core.gemini_ai_agent import integrate_gemini_agent
 
+# Import Step 14.1 components
+from core.comprehensive_ai_agent import integrate_comprehensive_ai
+
 # ===================== CONFIGURATION =====================
 TELEGRAM_TOKEN = '8271891791:AAGmxaL1XIXjjib1WAsjwIndu-c4iz4SrFk'
 ALPACA_KEY = 'PK6NQI7HSGQ7B38PYLG8'
@@ -624,6 +627,11 @@ Commands:
 /sentiment SYMBOL - Gemini AI sentiment analysis
 /news SYMBOL - Latest news analysis
 /narrative - Market narratives
+/validate SYMBOL BUY/SELL PRICE - AI trade validation
+/psychology - Trading psychology analysis
+/predict SYMBOL TIMEFRAME - AI price prediction
+/optimize SYMBOL SHARES - Execution optimization
+/risks - Hidden risk analysis
 /start_ai - Start automation
 /stop_ai - Stop automation
         """
@@ -911,6 +919,9 @@ def main():
     # Step 14: Integrate Gemini AI Agent
     sentiment_cmd, news_cmd, narrative_cmd = integrate_gemini_agent(bot)
     
+    # Step 14.1: Integrate Comprehensive AI Agent
+    validate_cmd, psych_cmd, predict_cmd, optimize_cmd, risk_scan_cmd = integrate_comprehensive_ai(bot)
+    
     # Create Telegram application
     app = Application.builder().token(TELEGRAM_TOKEN).build()
     
@@ -929,16 +940,22 @@ def main():
     app.add_handler(CommandHandler('sentiment', sentiment_cmd))
     app.add_handler(CommandHandler('news', news_cmd))
     app.add_handler(CommandHandler('narrative', narrative_cmd))
+    app.add_handler(CommandHandler('validate', validate_cmd))
+    app.add_handler(CommandHandler('psychology', psych_cmd))
+    app.add_handler(CommandHandler('predict', predict_cmd))
+    app.add_handler(CommandHandler('optimize', optimize_cmd))
+    app.add_handler(CommandHandler('risks', risk_scan_cmd))
     app.add_handler(CommandHandler('start_ai', bot.start_ai))
     app.add_handler(CommandHandler('stop_ai', bot.stop_ai))
     
     # Start bot
     print("=" * 60)
-    print("OMNI ALPHA 12.0+ - COMPLETE SYSTEM WITH STEPS 13 & 14")
+    print("OMNI ALPHA 12.0+ - COMPLETE SYSTEM WITH STEPS 13, 14 & 14.1")
     print("=" * 60)
     print("✅ All 12 steps integrated")
     print("✅ Step 13: Market Microstructure & Order Flow")
     print("✅ Step 14: Gemini AI Sentiment & News Analysis")
+    print("✅ Step 14.1: Comprehensive AI Agent & Trade Intelligence")
     print("✅ Telegram bot ready")
     print("✅ Alpaca connection ready")
     print("📱 Send /start in Telegram to begin")
