@@ -35,6 +35,9 @@ from core.comprehensive_ai_agent import integrate_comprehensive_ai
 # Import Step 15 components
 from core.alternative_data_processor import integrate_alternative_data
 
+# Import Step 16 components
+from core.options_hedging_system import integrate_options_hedging
+
 # ===================== CONFIGURATION =====================
 TELEGRAM_TOKEN = '8271891791:AAGmxaL1XIXjjib1WAsjwIndu-c4iz4SrFk'
 ALPACA_KEY = 'PK6NQI7HSGQ7B38PYLG8'
@@ -636,6 +639,11 @@ Commands:
 /optimize SYMBOL SHARES - Execution optimization
 /risks - Hidden risk analysis
 /altdata SYMBOL - Alternative data analysis
+/options analyze SYMBOL - Options opportunity analysis
+/options execute SYMBOL - Execute hedged options trade
+/options positions - View options positions
+/options greeks - Portfolio Greeks
+/options pnl - Today's options P&L
 /start_ai - Start automation
 /stop_ai - Stop automation
         """
@@ -929,6 +937,9 @@ def main():
     # Step 15: Integrate Alternative Data
     altdata_cmd = integrate_alternative_data(bot)
     
+    # Step 16: Integrate Options Hedging System
+    options_cmd = integrate_options_hedging(bot)
+    
     # Create Telegram application
     app = Application.builder().token(TELEGRAM_TOKEN).build()
     
@@ -953,18 +964,20 @@ def main():
     app.add_handler(CommandHandler('optimize', optimize_cmd))
     app.add_handler(CommandHandler('risks', risk_scan_cmd))
     app.add_handler(CommandHandler('altdata', altdata_cmd))
+    app.add_handler(CommandHandler('options', options_cmd))
     app.add_handler(CommandHandler('start_ai', bot.start_ai))
     app.add_handler(CommandHandler('stop_ai', bot.stop_ai))
     
     # Start bot
     print("=" * 60)
-    print("OMNI ALPHA 12.0+ - COMPLETE SYSTEM WITH STEPS 13, 14, 14.1 & 15")
-    print("=" * 60)
+    print("OMNI ALPHA 12.0+ - COMPLETE SYSTEM WITH STEPS 13, 14, 14.1, 15 & 16")
+    print("=" * 70)
     print("✅ All 12 steps integrated")
     print("✅ Step 13: Market Microstructure & Order Flow")
     print("✅ Step 14: Gemini AI Sentiment & News Analysis")
     print("✅ Step 14.1: Comprehensive AI Agent & Trade Intelligence")
     print("✅ Step 15: Alternative Data Processing System")
+    print("✅ Step 16: Complete Options Trading & Intelligent Hedging")
     print("✅ Telegram bot ready")
     print("✅ Alpaca connection ready")
     print("📱 Send /start in Telegram to begin")
