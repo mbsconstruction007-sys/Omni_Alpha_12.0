@@ -1,0 +1,147 @@
+{
+  "symbol": "TCS",
+  "test_timestamp": "2025-09-18T05:13:54.680782",
+  "data_sources": [
+    "yahoo_finance",
+    "simulated_options"
+  ],
+  "strategy_results": {
+    "Historical Data Validation": {
+      "status": "PASSED",
+      "data_points": 365,
+      "checks_passed": "5/5",
+      "quality_score": 100.0,
+      "checks": {
+        "sufficient_data": true,
+        "no_missing_ohlc": true,
+        "positive_prices": "True",
+        "logical_ohlc": "True",
+        "volume_present": true
+      }
+    },
+    "Technical Analysis": {
+      "status": "PASSED",
+      "indicators_calculated": 32,
+      "validations_passed": "6/6",
+      "key_indicators": {
+        "RSI": 62.08371934818315,
+        "MACD": 5.800589258945365,
+        "ATR": 45.05711146763393
+      }
+    },
+    "Options Greeks Calculation": {
+      "status": "PASSED",
+      "total_strikes": 20,
+      "valid_calculations": 20,
+      "success_rate": 100.0
+    },
+    "Volume Profile Analysis": {
+      "status": "PASSED",
+      "profile_levels": 49,
+      "poc_price": "4079.46",
+      "value_area_range": "3022.68 - 4265.95",
+      "validations": {
+        "profile_calculated": true,
+        "poc_identified": true,
+        "value_area_calculated": true,
+        "total_volume_positive": true
+      }
+    },
+    "ML Predictions": {
+      "status": "PASSED",
+      "r2_score": -0.2439450255702882,
+      "mse": 0.00022552009644679252,
+      "training_samples": 241,
+      "test_samples": 104,
+      "features_used": [
+        "SMA_Ratio",
+        "Volume_Ratio",
+        "Volatility"
+      ]
+    },
+    "Portfolio Optimization": {
+      "status": "PASSED",
+      "portfolio_symbols": [
+        "TCS",
+        "INFY",
+        "TCS",
+        "HDFC"
+      ],
+      "weights": [
+        0.4,
+        0.2,
+        0.2,
+        0.2
+      ],
+      "portfolio_score": 75,
+      "optimization_method": "technical_score_based"
+    },
+    "Risk Management": {
+      "status": "PASSED",
+      "var_95": -1.9058016921021608,
+      "var_99": -3.1898140639134724,
+      "cvar_95": -2.7104789380420935,
+      "max_drawdown": -32.92007980033115,
+      "validations": {
+        "var_reasonable": "True",
+        "cvar_worse_than_var": "True",
+        "max_drawdown_calculated": "True"
+      }
+    },
+    "Momentum Strategy": {
+      "status": "PASSED",
+      "total_return": -18.5960615234375,
+      "trades_executed": 2,
+      "signals_generated": 345,
+      "final_portfolio_value": 81403.9384765625
+    },
+    "Mean Reversion Strategy": {
+      "status": "PASSED",
+      "buy_signals": 23,
+      "sell_signals": 15,
+      "avg_z_score": -0.2048409884748723,
+      "max_deviation": 3.4266857379760327
+    },
+    "Breakout Strategy": {
+      "status": "PASSED",
+      "upward_breakouts": 15,
+      "downward_breakouts": 30,
+      "total_breakouts": 45
+    },
+    "Options Strategies": {
+      "status": "FAILED",
+      "strategies_tested": 10,
+      "viable_strategies": 0,
+      "viability_rate": 0.0
+    },
+    "Alternative Data Integration": {
+      "status": "PASSED",
+      "metrics_available": 5,
+      "total_metrics": 5,
+      "sentiment_score": 0.2847587143129643,
+      "social_mentions": 2674
+    },
+    "Market Microstructure": {
+      "status": "PASSED",
+      "validations_passed": 3,
+      "poc_price": "4079.46",
+      "value_area_width": 1243.27
+    },
+    "Sentiment Analysis": {
+      "status": "PASSED",
+      "sentiment_score": 0.2847587143129643,
+      "news_sentiment": 0.9737862729221158,
+      "social_mentions": 2674
+    },
+    "Performance Analytics": {
+      "status": "PASSED",
+      "sharpe_ratio": -0.5186542292104217,
+      "max_drawdown": -32.92007980033115,
+      "win_rate": 44.78021978021978,
+      "total_return": -16.809092972661144
+    }
+  },
+  "overall_score": 93.33333333333333,
+  "tests_passed": 14,
+  "tests_total": 15
+}
