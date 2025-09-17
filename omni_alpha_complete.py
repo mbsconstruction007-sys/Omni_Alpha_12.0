@@ -47,6 +47,9 @@ from core.production_system import integrate_production_system
 # Import Step 19 components
 from core.performance_analytics_optimization import integrate_performance_analytics
 
+# Import Step 20 components
+from core.institutional_system import integrate_institutional_system
+
 # ===================== CONFIGURATION =====================
 TELEGRAM_TOKEN = '8271891791:AAGmxaL1XIXjjib1WAsjwIndu-c4iz4SrFk'
 ALPACA_KEY = 'PK6NQI7HSGQ7B38PYLG8'
@@ -669,6 +672,11 @@ Commands:
 /performance scaling - Scaling status
 /performance costs - Cost analysis
 /performance dashboard - Performance dashboard
+/institutional metrics - Business metrics
+/institutional aum - AUM breakdown
+/institutional risk - Risk assessment
+/institutional compliance - Compliance check
+/institutional operations - Run daily operations
 /start_ai - Start automation
 /stop_ai - Stop automation
         """
@@ -974,6 +982,9 @@ def main():
     # Step 19: Integrate Performance Analytics
     performance_cmd = integrate_performance_analytics(bot)
     
+    # Step 20: Integrate Institutional System
+    institutional_cmd = integrate_institutional_system(bot)
+    
     # Create Telegram application
     app = Application.builder().token(TELEGRAM_TOKEN).build()
     
@@ -1002,12 +1013,13 @@ def main():
     app.add_handler(CommandHandler('portfolio', portfolio_cmd))
     app.add_handler(CommandHandler('production', production_cmd))
     app.add_handler(CommandHandler('performance', performance_cmd))
+    app.add_handler(CommandHandler('institutional', institutional_cmd))
     app.add_handler(CommandHandler('start_ai', bot.start_ai))
     app.add_handler(CommandHandler('stop_ai', bot.stop_ai))
     
     # Start bot
     print("=" * 60)
-    print("OMNI ALPHA 12.0+ - COMPLETE SYSTEM WITH STEPS 13-19")
+    print("OMNI ALPHA 12.0+ - COMPLETE SYSTEM WITH STEPS 13-20")
     print("=" * 70)
     print("✅ All 12 steps integrated")
     print("✅ Step 13: Market Microstructure & Order Flow")
@@ -1018,10 +1030,12 @@ def main():
     print("✅ Step 17: Portfolio Optimization & Multi-Strategy Orchestration")
     print("✅ Step 18: Complete Production Deployment System")
     print("✅ Step 19: Performance Analytics, Optimization & Scaling")
+    print("✅ Step 20: Complete Institutional Scale & Business Transformation")
     print("✅ Telegram bot ready")
     print("✅ Alpaca connection ready")
     print("🏭 Production-grade infrastructure ready")
     print("📊 Advanced analytics and auto-optimization ready")
+    print("🏛️ Institutional asset management ready")
     print("📱 Send /start in Telegram to begin")
     print("=" * 60)
     
