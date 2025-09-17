@@ -1,4 +1,3 @@
-import encoding_config
 """
 Test Step 13: Market Microstructure & Order Flow Analysis
 """
@@ -44,7 +43,7 @@ def test_step13():
     
     # Test symbol
     symbol = 'AAPL'
-    print(f"\n[METRICS] Testing microstructure analysis for {symbol}...")
+    print(f"\n[DATA] Testing microstructure analysis for {symbol}...")
     
     # Test 1: Order Book Imbalance
     print("\n1️⃣ Testing Order Book Imbalance Analysis...")
@@ -209,7 +208,7 @@ def test_step13():
         print(f"[FAIL] Flow metrics error: {e}")
     
     print("\n" + "=" * 70)
-    print("[SUCCESS] STEP 13 MICROSTRUCTURE ANALYSIS TEST COMPLETE!")
+    print("🎉 STEP 13 MICROSTRUCTURE ANALYSIS TEST COMPLETE!")
     print("[PASS] Order Book Analysis - OPERATIONAL")
     print("[PASS] VPIN Toxicity Analysis - OPERATIONAL")
     print("[PASS] Large Orders Detection - OPERATIONAL")
@@ -220,7 +219,7 @@ def test_step13():
     print("[PASS] Institutional Flow Tracking - OPERATIONAL")
     print("[PASS] Comprehensive Signal Generation - OPERATIONAL")
     print("[PASS] Flow Metrics - OPERATIONAL")
-    print("\n[LAUNCH] STEP 13 SUCCESSFULLY INTEGRATED!")
+    print("\n[ROCKET] STEP 13 SUCCESSFULLY INTEGRATED!")
     print("💼 Advanced microstructure analysis ready for live trading!")
 
 if __name__ == '__main__':

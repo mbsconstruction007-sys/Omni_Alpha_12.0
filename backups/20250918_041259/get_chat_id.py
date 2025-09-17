@@ -1,4 +1,3 @@
-from pathlib import Path
 ﻿# get_chat_id.py
 '''Script to get your Telegram chat ID'''
 

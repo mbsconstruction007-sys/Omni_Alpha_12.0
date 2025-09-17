@@ -1,4 +1,3 @@
-from pathlib import Path
 ﻿# test_bot_connection.py
 import os
 from dotenv import load_dotenv

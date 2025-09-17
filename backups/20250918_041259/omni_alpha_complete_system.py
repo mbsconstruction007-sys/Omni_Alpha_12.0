@@ -1,4 +1,4 @@
-'''
+﻿'''
 OMNI ALPHA 12.0 - COMPLETE TRADING SYSTEM
 Integrating all 12 steps with Alpaca Paper Trading via Telegram
 '''

@@ -1,4 +1,3 @@
-import encoding_config
 """
 Test Step 15: Alternative Data Processing System
 """
@@ -31,32 +30,32 @@ async def test_step15():
     print("📡 Testing Alpaca connection...")
     try:
         account = api.get_account()
-        print(f"[PASS] Connected! Account: {account.status}")
+        print(f"✅ Connected! Account: {account.status}")
     except Exception as e:
-        print(f"[FAIL] Connection failed: {e}")
+        print(f"❌ Connection failed: {e}")
         return
     
     # Initialize Alternative Data Processor
-    print("\n[FIX] Initializing Alternative Data Processor...")
+    print("\n🔧 Initializing Alternative Data Processor...")
     try:
         processor = AlternativeDataProcessor(api)
-        print(f"[PASS] Alternative Data Processor initialized")
+        print(f"✅ Alternative Data Processor initialized")
         print(f"   • Database path: {processor.db_path}")
         print(f"   • Data collectors: 7 sources")
     except Exception as e:
-        print(f"[FAIL] Processor initialization error: {e}")
+        print(f"❌ Processor initialization error: {e}")
         return
     
     # Test symbol
     symbol = 'AAPL'
-    print(f"\n[METRICS] Testing alternative data collection for {symbol}...")
+    print(f"\n📊 Testing alternative data collection for {symbol}...")
     
     # Test 1: Google Trends
     print("\n1️⃣ Testing Google Trends Collector...")
     try:
         trends_data = await processor.google_trends.get_trend_data(symbol)
         
-        print(f"[PASS] Google Trends:")
+        print(f"✅ Google Trends:")
         print(f"   • Signal: {trends_data.get('signal', 'N/A')}")
         print(f"   • Trend Score: {trends_data.get('trend_score', 0):.3f}")
         print(f"   • Search Volume: {trends_data.get('search_volume', 0):.1f}")
@@ -67,14 +66,14 @@ async def test_step15():
             print(f"   • Rising Queries: {trends_data['rising_queries'][:3]}")
             
     except Exception as e:
-        print(f"[FAIL] Google Trends error: {e}")
+        print(f"❌ Google Trends error: {e}")
     
     # Test 2: Reddit Sentiment
     print("\n2️⃣ Testing Reddit Sentiment Analyzer...")
     try:
         reddit_data = await processor.reddit_analyzer.analyze_sentiment(symbol)
         
-        print(f"[PASS] Reddit Sentiment:")
+        print(f"✅ Reddit Sentiment:")
         print(f"   • Signal: {reddit_data.get('signal', 'N/A')}")
         print(f"   • Mentions: {reddit_data.get('mentions', 0)}")
         print(f"   • Avg Sentiment: {reddit_data.get('avg_sentiment', 0):.2f}")
@@ -83,14 +82,14 @@ async def test_step15():
         print(f"   • Confidence: {reddit_data.get('confidence', 0):.1%}")
         
     except Exception as e:
-        print(f"[FAIL] Reddit sentiment error: {e}")
+        print(f"❌ Reddit sentiment error: {e}")
     
     # Test 3: Web Data Scraper
     print("\n3️⃣ Testing Web Data Scraper...")
     try:
         web_data = await processor.web_scraper.scrape_company_data(symbol)
         
-        print(f"[PASS] Web Data Scraping:")
+        print(f"✅ Web Data Scraping:")
         print(f"   • Signal: {web_data.get('signal', 'N/A')}")
         print(f"   • Confidence: {web_data.get('confidence', 0):.1%}")
         print(f"   • Data Sources: {len(web_data.get('data', {}))}")
@@ -101,14 +100,14 @@ async def test_step15():
             print(f"   • Employee Count: {hiring.get('employee_count', 0):,}")
             
     except Exception as e:
-        print(f"[FAIL] Web scraping error: {e}")
+        print(f"❌ Web scraping error: {e}")
     
     # Test 4: App Store Analytics
     print("\n4️⃣ Testing App Store Analytics...")
     try:
         app_data = await processor.app_analytics.get_app_metrics(symbol)
         
-        print(f"[PASS] App Store Analytics:")
+        print(f"✅ App Store Analytics:")
         print(f"   • Signal: {app_data.get('signal', 'N/A')}")
         print(f"   • Has App: {app_data.get('has_app', False)}")
         print(f"   • Confidence: {app_data.get('confidence', 0):.1%}")
@@ -120,14 +119,14 @@ async def test_step15():
             print(f"   • Review Sentiment: {metrics.get('review_sentiment', 0):.2f}")
             
     except Exception as e:
-        print(f"[FAIL] App store analytics error: {e}")
+        print(f"❌ App store analytics error: {e}")
     
     # Test 5: Economic Data
     print("\n5️⃣ Testing Economic Data Processor...")
     try:
         economic_data = await processor.economic_data.get_relevant_indicators(symbol)
         
-        print(f"[PASS] Economic Data:")
+        print(f"✅ Economic Data:")
         print(f"   • Signal: {economic_data.get('signal', 'N/A')}")
         print(f"   • Confidence: {economic_data.get('confidence', 0):.1%}")
         print(f"   • Sector: {economic_data.get('sector', 'N/A')}")
@@ -139,14 +138,14 @@ async def test_step15():
             print(f"   • Inflation: {indicators.get('inflation', 0):.1f}%")
             
     except Exception as e:
-        print(f"[FAIL] Economic data error: {e}")
+        print(f"❌ Economic data error: {e}")
     
     # Test 6: Weather Impact
     print("\n6️⃣ Testing Weather Impact Analyzer...")
     try:
         weather_data = await processor.weather_impact.analyze_impact(symbol)
         
-        print(f"[PASS] Weather Impact:")
+        print(f"✅ Weather Impact:")
         print(f"   • Signal: {weather_data.get('signal', 'N/A')}")
         print(f"   • Impact: {weather_data.get('impact', 'N/A')}")
         print(f"   • Conditions: {weather_data.get('conditions', 'N/A')}")
@@ -154,14 +153,14 @@ async def test_step15():
         print(f"   • Confidence: {weather_data.get('confidence', 0):.1%}")
         
     except Exception as e:
-        print(f"[FAIL] Weather impact error: {e}")
+        print(f"❌ Weather impact error: {e}")
     
     # Test 7: Crypto Metrics
     print("\n7️⃣ Testing Crypto Metrics Collector...")
     try:
         crypto_data = await processor.crypto_metrics.get_metrics(symbol)
         
-        print(f"[PASS] Crypto Metrics:")
+        print(f"✅ Crypto Metrics:")
         print(f"   • Signal: {crypto_data.get('signal', 'N/A')}")
         print(f"   • Crypto Exposure: {crypto_data.get('crypto_exposure', False)}")
         print(f"   • Confidence: {crypto_data.get('confidence', 0):.1%}")
@@ -173,7 +172,7 @@ async def test_step15():
             print(f"   • BTC 7D Change: {btc_metrics.get('change_7d', 0):.1f}%")
             
     except Exception as e:
-        print(f"[FAIL] Crypto metrics error: {e}")
+        print(f"❌ Crypto metrics error: {e}")
     
     # Test 8: Signal Generator
     print("\n8️⃣ Testing Alternative Data Signal Generator...")
@@ -181,7 +180,7 @@ async def test_step15():
         signal_gen = AlternativeDataSignalGenerator(processor)
         signal = await signal_gen.generate_signal(symbol)
         
-        print(f"[PASS] Alternative Data Signal:")
+        print(f"✅ Alternative Data Signal:")
         print(f"   • Symbol: {signal['symbol']}")
         print(f"   • Action: **{signal['action']}**")
         print(f"   • Confidence: {signal['confidence']:.1%}")
@@ -190,14 +189,14 @@ async def test_step15():
         print(f"   • Valid Until: {signal['expiry'][:19]}")
         
     except Exception as e:
-        print(f"[FAIL] Signal generation error: {e}")
+        print(f"❌ Signal generation error: {e}")
     
     # Test 9: Complete Data Collection
     print("\n9️⃣ Testing Complete Data Collection...")
     try:
         all_data = await processor.collect_all_data(symbol)
         
-        print(f"[PASS] Complete Data Collection:")
+        print(f"✅ Complete Data Collection:")
         print(f"   • Symbol: {all_data['symbol']}")
         print(f"   • Sources Collected: {len(all_data['sources'])}")
         print(f"   • Combined Signal: {all_data['combined_signal'].signal_type}")
@@ -205,7 +204,7 @@ async def test_step15():
         print(f"   • Signal Confidence: {all_data['combined_signal'].confidence:.2f}")
         
         # Show source breakdown
-        print(f"\n   [METRICS] Source Breakdown:")
+        print(f"\n   📊 Source Breakdown:")
         for source, data in all_data['sources'].items():
             if data:
                 signal = data.get('signal', 'N/A')
@@ -216,7 +215,7 @@ async def test_step15():
                 print(f"   ⚪ {source}: No data")
                 
     except Exception as e:
-        print(f"[FAIL] Complete data collection error: {e}")
+        print(f"❌ Complete data collection error: {e}")
     
     # Test 10: Database Storage
     print("\n🔟 Testing Database Storage...")
@@ -232,7 +231,7 @@ async def test_step15():
         cursor.execute("SELECT * FROM alt_data_signals WHERE symbol = ? ORDER BY timestamp DESC LIMIT 1", (symbol,))
         latest_signal = cursor.fetchone()
         
-        print(f"[PASS] Database Storage:")
+        print(f"✅ Database Storage:")
         print(f"   • Signals Stored: {signal_count}")
         if latest_signal:
             print(f"   • Latest Signal: {latest_signal[3]} ({latest_signal[4]:.2f} strength)")
@@ -241,21 +240,21 @@ async def test_step15():
         conn.close()
         
     except Exception as e:
-        print(f"[FAIL] Database storage error: {e}")
+        print(f"❌ Database storage error: {e}")
     
     print("\n" + "=" * 80)
-    print("[SUCCESS] STEP 15 ALTERNATIVE DATA PROCESSING TEST COMPLETE!")
-    print("[PASS] Google Trends Collection - OPERATIONAL")
-    print("[PASS] Reddit Sentiment Analysis - OPERATIONAL")
-    print("[PASS] Web Data Scraping - OPERATIONAL")
-    print("[PASS] App Store Analytics - OPERATIONAL")
-    print("[PASS] Economic Data Processing - OPERATIONAL")
-    print("[PASS] Weather Impact Analysis - OPERATIONAL")
-    print("[PASS] Crypto Metrics Collection - OPERATIONAL")
-    print("[PASS] Signal Generation - OPERATIONAL")
-    print("[PASS] Data Combination - OPERATIONAL")
-    print("[PASS] Database Storage - OPERATIONAL")
-    print("\n[LAUNCH] STEP 15 SUCCESSFULLY INTEGRATED!")
+    print("🎉 STEP 15 ALTERNATIVE DATA PROCESSING TEST COMPLETE!")
+    print("✅ Google Trends Collection - OPERATIONAL")
+    print("✅ Reddit Sentiment Analysis - OPERATIONAL")
+    print("✅ Web Data Scraping - OPERATIONAL")
+    print("✅ App Store Analytics - OPERATIONAL")
+    print("✅ Economic Data Processing - OPERATIONAL")
+    print("✅ Weather Impact Analysis - OPERATIONAL")
+    print("✅ Crypto Metrics Collection - OPERATIONAL")
+    print("✅ Signal Generation - OPERATIONAL")
+    print("✅ Data Combination - OPERATIONAL")
+    print("✅ Database Storage - OPERATIONAL")
+    print("\n🚀 STEP 15 SUCCESSFULLY INTEGRATED!")
     print("🌐 Alternative data processing ready for live trading!")
 
 if __name__ == '__main__':

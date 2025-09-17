@@ -1,4 +1,3 @@
-import encoding_config
 """
 Complete Omni Alpha 12.0+ System Test Execution
 Comprehensive test suite for all 20 integrated steps
@@ -26,7 +25,7 @@ class OmniAlphaSystemTester:
     async def run_complete_test_suite(self):
         """Execute complete test suite for all 20 steps"""
         
-        print("[LAUNCH] OMNI ALPHA 12.0+ COMPLETE SYSTEM TEST EXECUTION")
+        print("🚀 OMNI ALPHA 12.0+ COMPLETE SYSTEM TEST EXECUTION")
         print("=" * 80)
         print(f"Start Time: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
         print("=" * 80)
@@ -50,21 +49,21 @@ class OmniAlphaSystemTester:
         ]
         
         for suite_name, test_function in test_suites:
-            print(f"\n[TEST] Running {suite_name}...")
+            print(f"\n🧪 Running {suite_name}...")
             try:
                 result = await test_function()
                 self.test_results[suite_name] = result
                 if result['passed']:
-                    print(f"[PASS] {suite_name}: PASSED ({result['tests_run']} tests)")
+                    print(f"✅ {suite_name}: PASSED ({result['tests_run']} tests)")
                 else:
-                    print(f"[FAIL] {suite_name}: FAILED ({result['failures']} failures)")
+                    print(f"❌ {suite_name}: FAILED ({result['failures']} failures)")
                 
                 self.total_tests += result['tests_run']
                 self.passed_tests += result['tests_run'] - result['failures']
                 self.failed_tests += result['failures']
                 
             except Exception as e:
-                print(f"[FAIL] {suite_name}: ERROR - {str(e)}")
+                print(f"❌ {suite_name}: ERROR - {str(e)}")
                 self.test_results[suite_name] = {
                     'passed': False,
                     'tests_run': 1,
@@ -103,8 +102,8 @@ class OmniAlphaSystemTester:
             from omni_alpha_complete import OmniAlphaTelegramBot
             tests_run += 1
             
-            print(f"   • API Connection: [PASS]")
-            print(f"   • System Import: [PASS]")
+            print(f"   • API Connection: ✅")
+            print(f"   • System Import: ✅")
             print(f"   • Account Status: {account.status}")
             
         except Exception as e:
@@ -123,7 +122,7 @@ class OmniAlphaSystemTester:
             tests_run += 1
             # Simulate test execution
             await asyncio.sleep(0.1)
-            print(f"   • {component}: [PASS]")
+            print(f"   • {component}: ✅")
         
         return {
             'passed': failures == 0,
@@ -141,10 +140,10 @@ class OmniAlphaSystemTester:
             ], capture_output=True, text=True, timeout=60)
             
             if result.returncode == 0:
-                print("   • Order Book Analysis: [PASS]")
-                print("   • Volume Profile: [PASS]")
-                print("   • Order Flow Tracking: [PASS]")
-                print("   • Signal Generation: [PASS]")
+                print("   • Order Book Analysis: ✅")
+                print("   • Volume Profile: ✅")
+                print("   • Order Flow Tracking: ✅")
+                print("   • Signal Generation: ✅")
                 return {'passed': True, 'tests_run': 15, 'failures': 0}
             else:
                 print(f"   • Test execution failed: {result.stderr}")
@@ -171,7 +170,7 @@ class OmniAlphaSystemTester:
             
             for test in tests:
                 await asyncio.sleep(0.2)
-                print(f"   • {test}: [PASS]")
+                print(f"   • {test}: ✅")
             
             return {'passed': True, 'tests_run': len(tests), 'failures': 0}
             
@@ -193,7 +192,7 @@ class OmniAlphaSystemTester:
             
             for test in tests:
                 await asyncio.sleep(0.1)
-                print(f"   • {test}: [PASS]")
+                print(f"   • {test}: ✅")
             
             return {'passed': True, 'tests_run': len(tests), 'failures': 0}
             
@@ -217,7 +216,7 @@ class OmniAlphaSystemTester:
                 ]
                 
                 for source in data_sources:
-                    print(f"   • {source}: [PASS]")
+                    print(f"   • {source}: ✅")
                 
                 return {'passed': True, 'tests_run': 25, 'failures': 0}
             else:
@@ -243,7 +242,7 @@ class OmniAlphaSystemTester:
                 ]
                 
                 for component in components:
-                    print(f"   • {component}: [PASS]")
+                    print(f"   • {component}: ✅")
                 
                 return {'passed': True, 'tests_run': 20, 'failures': 0}
             else:
@@ -269,7 +268,7 @@ class OmniAlphaSystemTester:
                 ]
                 
                 for method in methods:
-                    print(f"   • {method}: [PASS]")
+                    print(f"   • {method}: ✅")
                 
                 return {'passed': True, 'tests_run': 30, 'failures': 0}
             else:
@@ -295,7 +294,7 @@ class OmniAlphaSystemTester:
                 ]
                 
                 for system in systems:
-                    print(f"   • {system}: [PASS]")
+                    print(f"   • {system}: ✅")
                 
                 return {'passed': True, 'tests_run': 18, 'failures': 0}
             else:
@@ -321,7 +320,7 @@ class OmniAlphaSystemTester:
                 ]
                 
                 for component in components:
-                    print(f"   • {component}: [PASS]")
+                    print(f"   • {component}: ✅")
                 
                 return {'passed': True, 'tests_run': 35, 'failures': 0}
             else:
@@ -347,7 +346,7 @@ class OmniAlphaSystemTester:
                 ]
                 
                 for system in systems:
-                    print(f"   • {system}: [PASS]")
+                    print(f"   • {system}: ✅")
                 
                 return {'passed': True, 'tests_run': 28, 'failures': 0}
             else:
@@ -376,7 +375,7 @@ class OmniAlphaSystemTester:
         for test in integration_tests:
             tests_run += 1
             await asyncio.sleep(0.2)
-            print(f"   • {test}: [PASS]")
+            print(f"   • {test}: ✅")
         
         return {'passed': failures == 0, 'tests_run': tests_run, 'failures': failures}
     
@@ -411,7 +410,7 @@ class OmniAlphaSystemTester:
             elif "CPU" in test:
                 metric = f"45%"
             else:
-                metric = "[PASS]"
+                metric = "✅"
             
             print(f"   • {test}: {metric}")
         
@@ -439,7 +438,7 @@ class OmniAlphaSystemTester:
         for test in security_tests:
             tests_run += 1
             await asyncio.sleep(0.1)
-            print(f"   • {test}: [PASS]")
+            print(f"   • {test}: ✅")
         
         return {'passed': failures == 0, 'tests_run': tests_run, 'failures': failures}
     
@@ -468,7 +467,7 @@ class OmniAlphaSystemTester:
             
             # Simulate chaos test results
             if tests_run <= 8:  # Most tests pass
-                print(f"   • {test}: [PASS] Resilient")
+                print(f"   • {test}: ✅ Resilient")
             else:  # Some controlled failures
                 print(f"   • {test}: ⚠️ Degraded but Stable")
         
@@ -482,44 +481,44 @@ class OmniAlphaSystemTester:
         pass_rate = (self.passed_tests / self.total_tests) * 100 if self.total_tests > 0 else 0
         
         print("\n" + "=" * 80)
-        print("[SUCCESS] OMNI ALPHA 12.0+ COMPLETE SYSTEM TEST EXECUTION COMPLETE")
+        print("🎉 OMNI ALPHA 12.0+ COMPLETE SYSTEM TEST EXECUTION COMPLETE")
         print("=" * 80)
         
-        print(f"[METRICS] FINAL TEST RESULTS:")
+        print(f"📊 FINAL TEST RESULTS:")
         print(f"   • Total Tests: {self.total_tests:,}")
-        print(f"   • Passed: {self.passed_tests:,} [PASS]")
-        print(f"   • Failed: {self.failed_tests:,} [FAIL]")
+        print(f"   • Passed: {self.passed_tests:,} ✅")
+        print(f"   • Failed: {self.failed_tests:,} ❌")
         print(f"   • Pass Rate: {pass_rate:.2f}%")
         print(f"   • Duration: {duration:,.2f} seconds")
         
-        print(f"\n[LIST] SUITE BREAKDOWN:")
+        print(f"\n📋 SUITE BREAKDOWN:")
         for suite_name, result in self.test_results.items():
-            status = "[PASS]" if result['passed'] else "[FAIL]"
+            status = "✅" if result['passed'] else "❌"
             print(f"   • {suite_name}: {status}")
         
         # System readiness assessment
-        print(f"\n[LAUNCH] SYSTEM READINESS ASSESSMENT:")
+        print(f"\n🚀 SYSTEM READINESS ASSESSMENT:")
         
         if pass_rate >= 95:
-            print("   [PASS] PRODUCTION READY - Excellent system health")
+            print("   ✅ PRODUCTION READY - Excellent system health")
         elif pass_rate >= 90:
             print("   ⚠️ MOSTLY READY - Minor issues to address")
         elif pass_rate >= 80:
-            print("   [FIX] NEEDS WORK - Significant issues present")
+            print("   🔧 NEEDS WORK - Significant issues present")
         else:
-            print("   [FAIL] NOT READY - Major issues require resolution")
+            print("   ❌ NOT READY - Major issues require resolution")
         
         print(f"\n🎯 KEY ACHIEVEMENTS:")
-        print("   [PASS] All 20 steps successfully integrated")
-        print("   [PASS] 500 Crore AUM institutional infrastructure")
-        print("   [PASS] 30+ Telegram commands operational")
-        print("   [PASS] Production-grade monitoring and analytics")
-        print("   [PASS] Complete compliance and risk management")
-        print("   [PASS] Advanced AI and machine learning integration")
-        print("   [PASS] Multi-strategy portfolio optimization")
-        print("   [PASS] Real-time performance monitoring")
+        print("   ✅ All 20 steps successfully integrated")
+        print("   ✅ 500 Crore AUM institutional infrastructure")
+        print("   ✅ 30+ Telegram commands operational")
+        print("   ✅ Production-grade monitoring and analytics")
+        print("   ✅ Complete compliance and risk management")
+        print("   ✅ Advanced AI and machine learning integration")
+        print("   ✅ Multi-strategy portfolio optimization")
+        print("   ✅ Real-time performance monitoring")
         
-        print(f"\n[CHART] BUSINESS METRICS:")
+        print(f"\n📈 BUSINESS METRICS:")
         print("   • Total AUM: ₹5,000,000,000 (500 Crores)")
         print("   • Client Base: 250 clients")
         print("   • Monthly Revenue: ₹13,333,333")
