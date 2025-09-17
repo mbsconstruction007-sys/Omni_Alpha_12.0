@@ -26,6 +26,9 @@ import joblib
 from core.microstructure import OrderBookAnalyzer, VolumeProfileAnalyzer, OrderFlowTracker
 from core.market_signals import MicrostructureSignals
 
+# Import Step 14 components
+from core.gemini_ai_agent import integrate_gemini_agent
+
 # ===================== CONFIGURATION =====================
 TELEGRAM_TOKEN = '8271891791:AAGmxaL1XIXjjib1WAsjwIndu-c4iz4SrFk'
 ALPACA_KEY = 'PK6NQI7HSGQ7B38PYLG8'
@@ -618,6 +621,9 @@ Commands:
 /risk - Risk parameters
 /orderflow SYMBOL - Order flow analysis
 /microstructure SYMBOL - Microstructure analysis
+/sentiment SYMBOL - Gemini AI sentiment analysis
+/news SYMBOL - Latest news analysis
+/narrative - Market narratives
 /start_ai - Start automation
 /stop_ai - Stop automation
         """
@@ -902,6 +908,9 @@ def main():
     # Initialize bot
     bot = OmniAlphaTelegramBot()
     
+    # Step 14: Integrate Gemini AI Agent
+    sentiment_cmd, news_cmd, narrative_cmd = integrate_gemini_agent(bot)
+    
     # Create Telegram application
     app = Application.builder().token(TELEGRAM_TOKEN).build()
     
@@ -917,15 +926,19 @@ def main():
     app.add_handler(CommandHandler('risk', bot.risk_info))
     app.add_handler(CommandHandler('orderflow', bot.orderflow_command))
     app.add_handler(CommandHandler('microstructure', bot.microstructure_command))
+    app.add_handler(CommandHandler('sentiment', sentiment_cmd))
+    app.add_handler(CommandHandler('news', news_cmd))
+    app.add_handler(CommandHandler('narrative', narrative_cmd))
     app.add_handler(CommandHandler('start_ai', bot.start_ai))
     app.add_handler(CommandHandler('stop_ai', bot.stop_ai))
     
     # Start bot
     print("=" * 60)
-    print("OMNI ALPHA 12.0+ - COMPLETE SYSTEM WITH STEP 13")
+    print("OMNI ALPHA 12.0+ - COMPLETE SYSTEM WITH STEPS 13 & 14")
     print("=" * 60)
     print("✅ All 12 steps integrated")
     print("✅ Step 13: Market Microstructure & Order Flow")
+    print("✅ Step 14: Gemini AI Sentiment & News Analysis")
     print("✅ Telegram bot ready")
     print("✅ Alpaca connection ready")
     print("📱 Send /start in Telegram to begin")
