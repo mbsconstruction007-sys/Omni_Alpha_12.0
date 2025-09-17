@@ -1,69 +1,81 @@
 {
-  "timestamp": "2025-09-16T05:18:15.884167",
-  "total_tests": 46,
-  "passed": 46,
-  "failed": 0,
-  "success_rate": 100.0,
-  "steps": {
-    "1": {
-      "name": "CORE INFRASTRUCTURE",
-      "passed": 6,
-      "failed": 0
+  "timestamp": "2025-09-18T04:05:26.407544",
+  "total_tests": 231,
+  "passed_tests": 211,
+  "failed_tests": 20,
+  "pass_rate": 91.34199134199135,
+  "duration": 32.72800350189209,
+  "suite_results": {
+    "Core Infrastructure (Steps 1-12)": {
+      "passed": true,
+      "tests_run": 14,
+      "failures": 0
     },
-    "2": {
-      "name": "DATA PIPELINE",
-      "passed": 4,
-      "failed": 0
+    "Market Microstructure (Step 13)": {
+      "passed": false,
+      "tests_run": 15,
+      "failures": 3
     },
-    "3": {
-      "name": "STRATEGY ENGINE",
-      "passed": 3,
-      "failed": 0
+    "AI Sentiment Analysis (Step 14)": {
+      "passed": true,
+      "tests_run": 4,
+      "failures": 0
     },
-    "4": {
-      "name": "RISK MANAGEMENT",
-      "passed": 3,
-      "failed": 0
+    "Comprehensive AI Agent (Step 14.1)": {
+      "passed": true,
+      "tests_run": 6,
+      "failures": 0
     },
-    "5": {
-      "name": "EXECUTION SYSTEM",
-      "passed": 3,
-      "failed": 0
+    "Alternative Data Processing (Step 15)": {
+      "passed": false,
+      "tests_run": 25,
+      "failures": 3
     },
-    "6": {
-      "name": "MACHINE LEARNING PLATFORM",
-      "passed": 3,
-      "failed": 0
+    "Options Trading & Hedging (Step 16)": {
+      "passed": false,
+      "tests_run": 20,
+      "failures": 2
     },
-    "7": {
-      "name": "MONITORING SYSTEM",
-      "passed": 3,
-      "failed": 0
+    "Portfolio Optimization (Step 17)": {
+      "passed": false,
+      "tests_run": 30,
+      "failures": 4
     },
-    "8": {
-      "name": "ANALYTICS ENGINE",
-      "passed": 3,
-      "failed": 0
+    "Production Deployment (Step 18)": {
+      "passed": false,
+      "tests_run": 18,
+      "failures": 2
     },
-    "9": {
-      "name": "AI BRAIN & CONSCIOUSNESS",
-      "passed": 3,
-      "failed": 0
+    "Performance Analytics (Step 19)": {
+      "passed": false,
+      "tests_run": 35,
+      "failures": 3
     },
-    "10": {
-      "name": "ORCHESTRATION & INTEGRATION",
-      "passed": 3,
-      "failed": 0
+    "Institutional Scale (Step 20)": {
+      "passed": false,
+      "tests_run": 28,
+      "failures": 3
     },
-    "11": {
-      "name": "INSTITUTIONAL OPERATIONS",
-      "passed": 3,
-      "failed": 0
+    "Integration Testing": {
+      "passed": true,
+      "tests_run": 8,
+      "failures": 0
     },
-    "12": {
-      "name": "GLOBAL MARKET DOMINANCE",
-      "passed": 3,
-      "failed": 0
+    "Performance Testing": {
+      "passed": true,
+      "tests_run": 8,
+      "failures": 0
+    },
+    "Security Testing": {
+      "passed": true,
+      "tests_run": 10,
+      "failures": 0
+    },
+    "Chaos Engineering": {
+      "passed": true,
+      "tests_run": 10,
+      "failures": 0
     }
-  }
+  },
+  "system_ready": false
 }
