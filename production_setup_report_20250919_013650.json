@@ -1,0 +1,29 @@
+{
+  "timestamp": "2025-09-19T01:35:59.933833",
+  "components_installed": [
+    "directory_logs/production",
+    "directory_data/production",
+    "directory_backups",
+    "directory_configs/production",
+    "directory_certificates",
+    "directory_load_test_results",
+    "directory_audit_logs",
+    "directory_monitoring/dashboards",
+    "directory_scripts/production",
+    "env_template",
+    "docker_compose_production",
+    "security_keys"
+  ],
+  "components_tested": [
+    "monitoring_system",
+    "risk_engine"
+  ],
+  "errors": [
+    "Dependency installation failed:   error: subprocess-exited-with-error\n  \n  Getting requirements to build wheel did not run successfully.\n  exit code: 1\n  \n  [33 lines of output]\n  Traceback (most recent call last):\n    File \"C:\\Users\\Aman Sehrawat\\AppData\\Local\\Programs\\Python\\Python312\\Lib\\site-packages\\pip\\_vendor\\pyproject_hooks\\_in_process\\_in_process.py\", line 389, in <module>\n      main()\n    File \"C:\\Users\\Aman Sehrawat\\AppData\\Local\\Programs\\Python\\Python312\\Lib\\site-packages\\pip\\_vendor\\pyproject_hooks\\_in_process\\_in_process.py\", line 373, in main\n      json_out[\"return_val\"] = hook(**hook_input[\"kwargs\"])\n                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n    File \"C:\\Users\\Aman Sehrawat\\AppData\\Local\\Programs\\Python\\Python312\\Lib\\site-packages\\pip\\_vendor\\pyproject_hooks\\_in_process\\_in_process.py\", line 137, in get_requires_for_build_wheel\n      backend = _build_backend()\n                ^^^^^^^^^^^^^^^^\n    File \"C:\\Users\\Aman Sehrawat\\AppData\\Local\\Programs\\Python\\Python312\\Lib\\site-packages\\pip\\_vendor\\pyproject_hooks\\_in_process\\_in_process.py\", line 70, in _build_backend\n      obj = import_module(mod_path)\n            ^^^^^^^^^^^^^^^^^^^^^^^\n    File \"C:\\Users\\Aman Sehrawat\\AppData\\Local\\Programs\\Python\\Python312\\Lib\\importlib\\__init__.py\", line 90, in import_module\n      return _bootstrap._gcd_import(name[level:], package, level)\n             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n    File \"<frozen importlib._bootstrap>\", line 1387, in _gcd_import\n    File \"<frozen importlib._bootstrap>\", line 1360, in _find_and_load\n    File \"<frozen importlib._bootstrap>\", line 1310, in _find_and_load_unlocked\n    File \"<frozen importlib._bootstrap>\", line 488, in _call_with_frames_removed\n    File \"<frozen importlib._bootstrap>\", line 1387, in _gcd_import\n    File \"<frozen importlib._bootstrap>\", line 1360, in _find_and_load\n    File \"<frozen importlib._bootstrap>\", line 1331, in _find_and_load_unlocked\n    File \"<frozen importlib._bootstrap>\", line 935, in _load_unlocked\n    File \"<frozen importlib._bootstrap_external>\", line 999, in exec_module\n    File \"<frozen importlib._bootstrap>\", line 488, in _call_with_frames_removed\n    File \"C:\\Users\\Aman Sehrawat\\AppData\\Local\\Temp\\pip-build-env-u_nq8lls\\overlay\\Lib\\site-packages\\setuptools\\__init__.py\", line 16, in <module>\n      import setuptools.version\n    File \"C:\\Users\\Aman Sehrawat\\AppData\\Local\\Temp\\pip-build-env-u_nq8lls\\overlay\\Lib\\site-packages\\setuptools\\version.py\", line 1, in <module>\n      import pkg_resources\n    File \"C:\\Users\\Aman Sehrawat\\AppData\\Local\\Temp\\pip-build-env-u_nq8lls\\overlay\\Lib\\site-packages\\pkg_resources\\__init__.py\", line 2172, in <module>\n      register_finder(pkgutil.ImpImporter, find_on_path)\n                      ^^^^^^^^^^^^^^^^^^^\n  AttributeError: module 'pkgutil' has no attribute 'ImpImporter'. Did you mean: 'zipimporter'?\n  [end of output]\n  \n  note: This error originates from a subprocess, and is likely not a problem with pip.\n\n[notice] A new release of pip is available: 25.0.1 -> 25.2\n[notice] To update, run: python.exe -m pip install --upgrade pip\nerror: subprocess-exited-with-error\n\nGetting requirements to build wheel did not run successfully.\nexit code: 1\n\nSee above for output.\n\nnote: This error originates from a subprocess, and is likely not a problem with pip.\n",
+    "Health script creation failed: 'charmap' codec can't encode character '\\U0001f3e5' in position 55: character maps to <undefined>",
+    "Start script creation failed: 'charmap' codec can't encode character '\\U0001f680' in position 48: character maps to <undefined>",
+    "Orchestrator test failed: name 'AIOKafkaConsumer' is not defined",
+    "Database test failed: name 'PRODUCTION_DB_AVAILABLE' is not defined"
+  ],
+  "warnings": []
+}
