@@ -1,0 +1,48 @@
+global:
+  scrape_interval: 15s
+  evaluation_interval: 15s
+
+rule_files:
+  - "trading_alerts.yml"
+
+scrape_configs:
+  - job_name: 'omni-alpha-enhanced'
+    static_configs:
+      - targets: ['omni-alpha-trading:8000']
+    scrape_interval: 5s
+    metrics_path: /metrics
+    
+  - job_name: 'system-metrics'
+    static_configs:
+      - targets: ['localhost:9100']
+    scrape_interval: 10s
+
+alerting:
+  alertmanagers:
+    - static_configs:
+        - targets:
+          - alertmanager:9093
+
+# Trading-specific recording rules
+recording_rules:
+  - name: trading_metrics
+    rules:
+      - record: omni_alpha:portfolio_return_rate
+        expr: rate(omni_alpha_portfolio_value[1h])
+      
+      - record: omni_alpha:trade_success_rate
+        expr: |
+          (
+            sum(rate(omni_alpha_successful_trades[5m])) /
+            sum(rate(omni_alpha_total_trades[5m]))
+          ) * 100
+      
+      - record: omni_alpha:average_position_size
+        expr: avg(omni_alpha_position_values)
+      
+      - record: omni_alpha:risk_score
+        expr: |
+          (
+            sum(omni_alpha_position_values) /
+            omni_alpha_portfolio_value
+          ) * 100

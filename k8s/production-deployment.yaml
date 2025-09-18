@@ -1,0 +1,135 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: omni-alpha-enhanced
+  labels:
+    app: omni-alpha-enhanced
+    version: "12.0"
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: omni-alpha-enhanced
+  template:
+    metadata:
+      labels:
+        app: omni-alpha-enhanced
+    spec:
+      containers:
+      - name: omni-alpha-trading
+        image: omni-alpha-enhanced:latest
+        ports:
+        - containerPort: 8000
+        env:
+        - name: ALPACA_API_KEY
+          valueFrom:
+            secretKeyRef:
+              name: alpaca-secrets
+              key: api-key
+        - name: ALPACA_SECRET_KEY
+          valueFrom:
+            secretKeyRef:
+              name: alpaca-secrets
+              key: secret-key
+        - name: TELEGRAM_BOT_TOKEN
+          valueFrom:
+            secretKeyRef:
+              name: telegram-secrets
+              key: bot-token
+        - name: MAX_POSITION_SIZE_PERCENT
+          value: "10"
+        - name: MAX_POSITIONS
+          value: "20"
+        - name: STOP_LOSS_PERCENT
+          value: "3"
+        - name: TAKE_PROFIT_PERCENT
+          value: "6"
+        resources:
+          requests:
+            memory: "512Mi"
+            cpu: "500m"
+          limits:
+            memory: "1Gi"
+            cpu: "1000m"
+        livenessProbe:
+          httpGet:
+            path: /health
+            port: 8000
+          initialDelaySeconds: 30
+          periodSeconds: 30
+        readinessProbe:
+          httpGet:
+            path: /ready
+            port: 8000
+          initialDelaySeconds: 5
+          periodSeconds: 10
+        volumeMounts:
+        - name: logs-volume
+          mountPath: /app/logs
+        - name: data-volume
+          mountPath: /app/data
+      volumes:
+      - name: logs-volume
+        persistentVolumeClaim:
+          claimName: omni-alpha-logs-pvc
+      - name: data-volume
+        persistentVolumeClaim:
+          claimName: omni-alpha-data-pvc
+      restartPolicy: Always
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: omni-alpha-service
+spec:
+  selector:
+    app: omni-alpha-enhanced
+  ports:
+  - protocol: TCP
+    port: 80
+    targetPort: 8000
+  type: LoadBalancer
+
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: alpaca-secrets
+type: Opaque
+stringData:
+  api-key: "PK6NQI7HSGQ7B38PYLG8"
+  secret-key: "gu15JAAvNMqbDGJ8m14ePtHOy3TgnAD7vHkvg74C"
+
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: telegram-secrets
+type: Opaque
+stringData:
+  bot-token: "8271891791:AAGmxaL1XIXjjib1WAsjwIndu-c4iz4SrFk"
+
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: omni-alpha-logs-pvc
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 10Gi
+
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: omni-alpha-data-pvc
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 50Gi

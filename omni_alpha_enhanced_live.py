@@ -254,12 +254,12 @@ class EnhancedAlpacaTradingSystem:
         """Check technical indicators for sell signal"""
         
         try:
-            # Get recent bars
+            # Use daily bars instead of minute bars to avoid SIP data subscription issues
             bars = self.api.get_bars(
                 symbol,
-                TimeFrame.Minute,
-                start=(datetime.now() - timedelta(hours=2)).strftime('%Y-%m-%dT%H:%M:%SZ'),
-                limit=100
+                TimeFrame.Day,
+                start=(datetime.now() - timedelta(days=30)).strftime('%Y-%m-%d'),
+                limit=30
             ).df
             
             if len(bars) < 20:
