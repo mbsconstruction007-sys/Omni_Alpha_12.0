@@ -1,0 +1,32 @@
+{
+  "timestamp": "2025-09-19T00:13:33.890187",
+  "files_deleted": [
+    "et --hard 59df084",
+    "et --hard HEAD~1",
+    "final_cleanup.py",
+    "final_cleanup_report.json",
+    "STEP_1_ANALYSIS_REPORT.md",
+    "STEP_2_ANALYSIS_REPORT.md",
+    "test_step1_core_infrastructure.py",
+    "test_step2_data_collection.py",
+    "step_1_core_infrastructure.py",
+    "step_2_data_collection.py",
+    "migrate_step2_enhanced.py",
+    "verify_env.py",
+    "verify_system.py",
+    "get_chat_id.py",
+    "dashboard.py",
+    "core/__pycache__",
+    "security/__pycache__"
+  ],
+  "files_moved": [
+    "data_collection/providers/__init__.py",
+    "data_collection/streams/__init__.py",
+    "data_collection/orderbook/__init__.py",
+    "data_collection/storage/__init__.py",
+    "data_collection/validation/__init__.py",
+    "data_collection/news_sentiment/__init__.py"
+  ],
+  "directories_created": [],
+  "errors": []
+}
