@@ -920,7 +920,7 @@ Auto Sell: {'Enabled' if self.config.SELL_ON_PROFIT_TARGET else 'Disabled'}
         
         await update.message.reply_text(msg, parse_mode='Markdown')
     
-    def run(self):
+    async def run(self):
         """Start the bot"""
         
         logger.info("Starting Enhanced Omni Alpha Bot...")
@@ -939,12 +939,19 @@ Auto Sell: {'Enabled' if self.config.SELL_ON_PROFIT_TARGET else 'Disabled'}
         print("Send /start in Telegram to begin")
         print("=" * 60)
         
-        # Run the application
-        self.application.run_polling()
+        # Initialize and start application
+        await self.application.initialize()
+        await self.application.start()
+        await self.application.updater.start_polling()
+        
+        logger.info("Bot is running! Press Ctrl+C to stop.")
+        
+        # Keep running
+        await asyncio.Event().wait()
 
 # ===================== MAIN EXECUTION =====================
 
-def main():
+async def main():
     """Main entry point"""
     
     try:
@@ -964,7 +971,7 @@ def main():
         print("\nBot starting...")
         print("Open Telegram and send /help")
         
-        bot.run()
+        await bot.run()
         
     except KeyboardInterrupt:
         print("Bot stopped by user")
@@ -973,4 +980,4 @@ def main():
         raise
 
 if __name__ == "__main__":
-    main()
+    asyncio.run(main())
