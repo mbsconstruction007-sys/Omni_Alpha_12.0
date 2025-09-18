@@ -36,12 +36,12 @@ from telegram.ext import Application, CommandHandler, ContextTypes
 from dotenv import load_dotenv
 load_dotenv()
 
-# Configure logging
+# Configure logging with UTF-8 encoding for Windows compatibility
 logging.basicConfig(
     level=logging.INFO,
     format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
     handlers=[
-        logging.FileHandler('live_trading.log'),
+        logging.FileHandler('live_trading.log', encoding='utf-8'),
         logging.StreamHandler()
     ]
 )
@@ -1281,10 +1281,10 @@ class OmniAlphaLiveBot:
         
         await update.message.reply_text(help_msg, parse_mode='Markdown')
     
-    async def run(self):
-        """Start the live trading bot"""
+    def run(self):
+        """Start the live trading bot (synchronous version to avoid asyncio conflicts)"""
         
-        logger.info("🚀 Starting Omni Alpha Live Trading Bot...")
+        print("Starting Omni Alpha Live Trading Bot...")
         
         # Create Telegram application
         application = Application.builder().token(
@@ -1310,14 +1310,14 @@ class OmniAlphaLiveBot:
             application.add_handler(CommandHandler(command, handler))
         
         print("=" * 60)
-        print("🚀 OMNI ALPHA LIVE TRADING SYSTEM")
+        print("OMNI ALPHA LIVE TRADING SYSTEM")
         print("=" * 60)
-        print("✅ Alpaca connection verified")
-        print("✅ All 20 steps integrated")
-        print("✅ Risk management active")
-        print("✅ AI strategies loaded")
-        print("✅ Telegram bot ready")
-        print("📱 Send /start in Telegram to begin")
+        print("Alpaca connection verified")
+        print("All 20 steps integrated")
+        print("Risk management active")
+        print("AI strategies loaded")
+        print("Telegram bot ready")
+        print("Send /start in Telegram to begin")
         print("=" * 60)
         
         # Run the application
@@ -1325,7 +1325,7 @@ class OmniAlphaLiveBot:
 
 # ===================== MAIN EXECUTION =====================
 
-async def main():
+def main():
     """
     Main entry point for live trading system
     """
@@ -1333,14 +1333,14 @@ async def main():
     try:
         # Initialize and run the live trading bot
         bot = OmniAlphaLiveBot()
-        await bot.run()
+        bot.run()
         
     except KeyboardInterrupt:
-        logger.info("🛑 Bot stopped by user")
+        print("Bot stopped by user")
     except Exception as e:
-        logger.error(f"❌ Bot failed: {e}")
+        print(f"Bot failed: {e}")
         raise
 
 if __name__ == "__main__":
     # Run the live trading system
-    asyncio.run(main())
+    main()
