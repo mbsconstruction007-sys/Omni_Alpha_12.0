@@ -1,0 +1,33 @@
+{
+  "session_stats": {
+    "trades": 0,
+    "wins": 0,
+    "losses": 0,
+    "pnl": 0.0
+  },
+  "final_positions": {},
+  "config": {
+    "SCAN_SYMBOLS": [
+      "AAPL",
+      "GOOGL",
+      "MSFT",
+      "TSLA",
+      "SPY",
+      "QQQ",
+      "AMZN",
+      "META",
+      "NVDA",
+      "IWM"
+    ],
+    "SCAN_INTERVAL": 60,
+    "MIN_SIGNAL_CONFIDENCE": 0.65,
+    "MAX_DAILY_LOSS": 1000.0,
+    "MAX_POSITION_SIZE": 10000.0,
+    "MAX_POSITIONS": 5,
+    "SIMULATION_MODE": true,
+    "TRADING_MODE": "paper",
+    "ALPACA_API_KEY": "your_alpaca_api_key_here",
+    "ALPACA_SECRET_KEY": "your_alpaca_secret_key_here"
+  },
+  "end_time": "2025-09-20T18:21:16.920732"
+}
