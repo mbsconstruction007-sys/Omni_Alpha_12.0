@@ -1,0 +1,31 @@
+{
+  "auto_git_settings": {
+    "enabled": true,
+    "interval_seconds": 300,
+    "auto_push": true,
+    "ignore_patterns": [
+      "*.log",
+      "*.tmp",
+      "__pycache__/",
+      ".pytest_cache/",
+      "*.pyc",
+      ".DS_Store",
+      "Thumbs.db",
+      "session_report_*.json",
+      "auto_git_update.log"
+    ],
+    "commit_message_template": "🔄 Auto-update: {categories}",
+    "max_files_per_commit": 50,
+    "enable_intelligent_commits": true
+  },
+  "monitoring": {
+    "log_level": "INFO",
+    "log_file": "auto_git_update.log",
+    "status_check_interval": 60
+  },
+  "repository": {
+    "default_branch": "main",
+    "remote_name": "origin",
+    "auto_pull_before_push": false
+  }
+}
